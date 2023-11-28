@@ -92,7 +92,7 @@ const displayMovements = function (movements) {
       <div class="movements__row">
           <div class="movements__type 
           movements__type--${type}">${i + 1} ${type}</div>          
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${mov}€</div>
       </div>
     `;
 
@@ -117,9 +117,46 @@ displayMovements(account1.movements);
 
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance}€`;
 };
 calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const income = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumIn.textContent = `${income}€`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+
+    // Great, but now let's say that the bank
+    // introduces a new rule.
+    // So now the bank only pays an interest
+    // if that interest is at least one Euro
+    // or whatever other currency.
+    .filter((interest, i, arr) => {
+      console.log(arr);
+      return interest >= 1;
+    })
+    .reduce((acc, interest) => acc + interest, 0);
+
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
+
+// const labelBalance = document.querySelector('.balance__value');
+// const labelSumIn = document.querySelector('.summary__value--in');
+// const labelSumOut = document.querySelector('.summary__value--out');
+// const labelSumInterest = document.querySelector('.summary__value--interest');
 
 const createUsernames = function (accs) {
   //   And in this case, the side effects are gonna be
@@ -1143,60 +1180,167 @@ console.log(accounts);
 // Coding Challenge #2
 ///////////////////////////////////////////////////////////////
 
-// Let's go back to Julia and Kate's study about dogs. This time, they want to convert
-// dog ages to human ages and calculate the average age of the dogs in their study.
+// // Let's go back to Julia and Kate's study about dogs. This time, they want to convert
+// // dog ages to human ages and calculate the average age of the dogs in their study.
 
-// Your tasks:
+// // Your tasks:
 
-// Create a function 'calcAverageHumanAge', which accepts an arrays of dog's
-// ages ('ages'), and does the following things in order:
+// // Create a function 'calcAverageHumanAge', which accepts an arrays of dog's
+// // ages ('ages'), and does the following things in order:
 
-// 1. Calculate the dog age in human years using the following formula: if the dog is
-// <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old,
-// humanAge = 16 + dogAge * 4
+// // 1. Calculate the dog age in human years using the following formula: if the dog is
+// // <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old,
+// // humanAge = 16 + dogAge * 4
 
-// 2. Exclude all dogs that are less than 18 human years old (which is the same as
-// keeping dogs that are at least 18 years old)
+// // 2. Exclude all dogs that are less than 18 human years old (which is the same as
+// // keeping dogs that are at least 18 years old)
 
-// 3. Calculate the average human age of all adult dogs (you should already know
-// from other challenges how we calculate averages �)
+// // 3. Calculate the average human age of all adult dogs (you should already know
+// // from other challenges how we calculate averages �)
 
-// 4. Run the function for both test datasets
+// // 4. Run the function for both test datasets
 
-// Test data:
+// // Test data:
 
-// § Data 1: [5, 2, 4, 1, 15, 8, 3]
-// § Data 2: [16, 6, 10, 5, 6, 1, 4]
+// // § Data 1: [5, 2, 4, 1, 15, 8, 3]
+// // § Data 2: [16, 6, 10, 5, 6, 1, 4]
 
-// GOOD LUCK �
+// // GOOD LUCK �
 
-const calcAverageHumanAge = function (ages) {
-  console.log(ages);
-  // 1
-  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
-  console.log(humanAges);
+// const calcAverageHumanAge = function (ages) {
+//   console.log(ages);
+//   // 1
+//   const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+//   console.log(humanAges);
 
-  // 2
-  const addults = humanAges.filter(age => age >= 18);
-  console.log(addults);
+//   // 2
+//   const addults = humanAges.filter(age => age >= 18);
+//   console.log(addults);
 
-  //3
-  // const average = addults.reduce((acc, curr) => acc + curr, 0) / addults.length;
+//   //3
+//   // const average = addults.reduce((acc, curr) => acc + curr, 0) / addults.length;
 
-  //   Now, I just wanted to let that we could have done
-  // this average calculation here in a different way.
-  // So in a bit more complex way.
+//   //   Now, I just wanted to let that we could have done
+//   // this average calculation here in a different way.
+//   // So in a bit more complex way.
 
-  //2 3 ->  (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
-  const average = addults.reduce(
-    (acc, age, i, arr) => acc + age / arr.length,
-    0
-  );
+//   //2 3 ->  (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
+//   const average = addults.reduce(
+//     (acc, age, i, arr) => acc + age / arr.length,
+//     0
+//   );
 
-  return average;
-};
+//   return average;
+// };
 
-const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
-console.log(avg1);
-console.log(avg2);
+// const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+// console.log(avg1);
+// console.log(avg2);
+
+//////////////////////////////////////////////////////////////////////
+// The Magic of Chaining Methods
+//////////////////////////////////////////////////////////////////////
+
+// So up until now,
+// we have been using the map filter
+// and reduce methods kind of in isolation.
+// However, we can take this one step further
+// by chaining all these methods one after another.
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// For example, let's say that we wanted to take
+// all the movement deposits then convert them
+// from euros to dollars and finally add them all up,
+// so that we know exactly how much was deposited
+// into the account in US dollars.
+
+// So as I said, we want to take all of the deposits.
+const eurToUsd = 1.1;
+
+//PIPELINE
+const totalDepositUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+// and on this result, we can also call a reduce.
+// And of course we could also call more filters or more maps,
+
+console.log(totalDepositUSD);
+
+// And as I mentioned we could of course
+// chain many other methods here as well,
+// as long as they return new arrays.
+// So filter returns a new array.
+// So we could have added something else here
+// or the same goes for map, but reduce,
+// for example, will return a value.
+// So only this number in this case.
+// And so of course here we could now not have chained
+// a map or a filter after this.
+// So we can only chain a method after another one,
+// if the first one returns an array.
+
+// Now, when we chain all these methods together here,
+// it can be a little bit hard to debug
+// if one of the results is not what we expect.
+
+// For example,
+// if this result here would be something really weird,
+// we wouldn't really know from which step of this pipeline
+// it would come from, right?
+// And to solve this,
+// it would be good to check out the array
+// in each of these different steps.
+
+console.log(movements);
+
+//PIPELINE
+const totalDepositUSD2 = movements
+  .filter(mov => mov < 0)
+  .map((mov, i, arr) => {
+    console.log(arr);
+    return mov * eurToUsd;
+  })
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositUSD2);
+
+// And so this was just to show you that we can
+// inspect the current array at any stage of the pipeline
+// using the third parameter of the callback function.
+
+// And now just to finish this lecture,
+// let me just give you a couple of remarks about chaining.
+// So first we should not overuse chaining,
+// so we should try to optimize it
+// because chaining tons of methods one after the other
+// can cause a real performance issues
+// if we have really huge arrays.
+
+// So if we have a huge chain of methods,
+// chained one after the other,
+// we should try to compress all the functionality
+// that they do into as little methods as possible.
+
+// For example, sometimes we create way more
+// map methods then we actually need,
+// where we could just do it all in just one map call.
+
+// So when you chain methods like this,
+// keep looking for opportunities of
+// keeping up your codes performance.
+
+// And second, it is a bad practice in JavaScript
+// to chain methods that mutate the underlying original array.
+// And an example of that is the splice method.
+// So again, you should not chain a method
+// like the splice or the reverse method.
+
+// I mean, you can do that,
+// and for a small application like this one,
+// it's not a big deal and it's not going to cause problems,
+// but in a large scale application,
+// it's usually always a good practice
+// to avoid mutating arrays.
