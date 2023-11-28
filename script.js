@@ -4,6 +4,14 @@
 /////////////////////////////////////////////////
 // BANKIST APP
 
+// So yah, so one object for each account
+// and you could ask why not use a map instead of an object.
+// Well the thing is that we're gonna pretend
+// that all these data is coming from a Web API.
+// So a little bit like we talked about earlier.
+// And whenever we get data from an API
+// this data usually comes in a form of objects.
+
 // Data
 const account1 = {
   owner: 'Jonas Schmedtmann',
@@ -506,80 +514,87 @@ const inputClosePin = document.querySelector('.form__input--pin');
 ///////////////////////////////////////////////////////////////////
 // forEach With Maps and Sets
 ///////////////////////////////////////////////////////////////////
-// So we learned about the forEach method on arrays.
-// However, forEach is also available on maps and sets.
-// And so let's take a small detour now
-// and see how forEach works with maps and with sets.
+// // So we learned about the forEach method on arrays.
+// // However, forEach is also available on maps and sets.
+// // And so let's take a small detour now
+// // and see how forEach works with maps and with sets.
 
-// MAP
+// // MAP
 
-// And remember that in this array of arrays,
-// each of these array elements, so this inner array,
-// will be one entry of the map,
-// where this here is the key -(USD), and this is the value (United States dollar).
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// // And remember that in this array of arrays,
+// // each of these array elements, so this inner array,
+// // will be one entry of the map,
+// // where this here is the key -(USD), and this is the value (United States dollar).
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
-// And so we can call forEach also on a map.
-// So forEach, and then again, the callback function,
-// and now this callback function also has three parameters.
-// So when the forEach method calls it,
-// it will call this function with three arguments.
-// So the first one will be the current value,
-// so the current value in the current iteration,
-// the second one is the key, and the third one
-// is the entire map that is being looped over.
+// // And so we can call forEach also on a map.
+// // So forEach, and then again, the callback function,
+// // and now this callback function also has three parameters.
+// // So when the forEach method calls it,
+// // it will call this function with three arguments.
+// // So the first one will be the current value,
+// // so the current value in the current iteration,
+// // the second one is the key, and the third one
+// // is the entire map that is being looped over.
 
-// And so you see, this is similar to the array,
-// where in the array,
-// the first parameter is the current element of the array,
-// the second one is the index
-// and the third is the entire array.
-// And so there is a nice correspondence between these,
-// and so this is quite easy to memorize here.
+// // And so you see, this is similar to the array,
+// // where in the array,
+// // the first parameter is the current element of the array,
+// // the second one is the index
+// // and the third is the entire array.
+// // And so there is a nice correspondence between these,
+// // and so this is quite easy to memorize here.
 
-currencies.forEach(function (value, key, map) {
-  console.log(`${key}: ${value}`);
-});
+// currencies.forEach(function (value, key, map) {
+//   console.log(`${key}: ${value}`);
+// });
 
-//SET
+// //SET
 
-const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
-console.log(currenciesUnique);
+// const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+// console.log(currenciesUnique);
 
-currenciesUnique.forEach(function (value, _, map) {
-  console.log(`${value}: ${value}`);
-});
+// currenciesUnique.forEach(function (value, _, map) {
+//   console.log(`${value}: ${value}`);
+// });
 
-// And so what this means is that the key here
-// is exactly the same as the value.
-// So why is that?
+// // And so what this means is that the key here
+// // is exactly the same as the value.
+// // So why is that?
 
-// Well, a set doesn't have keys, right?
-// And it doesn't have indexes either.
-// And so there is no value that would make sense for the key.
-// All right, so essentially this key here
-// makes no sense at all.
-// It wouldn't even have to be there.
-// And so the people who designed this forEach method for sets,
-// they could have simply omitted the second argument, right?
+// // Well, a set doesn't have keys, right?
+// // And it doesn't have indexes either.
+// // And so there is no value that would make sense for the key.
+// // All right, so essentially this key here
+// // makes no sense at all.
+// // It wouldn't even have to be there.
+// // And so the people who designed this forEach method for sets,
+// // they could have simply omitted the second argument, right?
 
-// Well, if they did that,
-// then this forEach would have been different from the others.
-// And so that would then create confusion in developers,
-// and therefore it was decided to keep the same signature.
-// So basically to keep the same three parameters
-// in this callback function and simply
-// to set the second one to the first one.
-// So we can just write value here as well,
-// just to avoid that confusion.
+// // Well, if they did that,
+// // then this forEach would have been different from the others.
+// // And so that would then create confusion in developers,
+// // and therefore it was decided to keep the same signature.
+// // So basically to keep the same three parameters
+// // in this callback function and simply
+// // to set the second one to the first one.
+// // So we can just write value here as well,
+// // just to avoid that confusion.
 
-// we cannot have the duplicate parameter name.
-// And so we can just use an underscore,
-// which in JavaScript means a throwaway variable.
-// So that means a variable that is completely unnecessary.
-// So it's just a convention which we will see again
-// a little bit later.
+// // we cannot have the duplicate parameter name.
+// // And so we can just use an underscore,
+// // which in JavaScript means a throwaway variable.
+// // So that means a variable that is completely unnecessary.
+// // So it's just a convention which we will see again
+// // a little bit later.
+
+/////////////////////////////////////////////////////////////////
+// PROJECT: "Bankist" App
+/////////////////////////////////////////////////////////////////
+
+//see video the instructions
+//see flowchat image attached
