@@ -71,7 +71,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 // Simple Array Methods
@@ -258,60 +258,253 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 ///////////////////////////////////////////////////////////
 // The new at Method
 ///////////////////////////////////////////////////////////
-// There's a new,
-// very simple array method in ES2022,
-// which is the At Method.
+// // There's a new,
+// // very simple array method in ES2022,
+// // which is the At Method.
 
-const arr = [23, 11, 64];
-console.log(arr[0]); // array at position zero
-console.log(arr.at(0)); // array at position zero
+// const arr = [23, 11, 64];
+// console.log(arr[0]); // array at position zero
+// console.log(arr.at(0)); // array at position zero
 
-// So basically we can now replace
-// the traditional bracket notation
-// with the more modern looking At Method,
-// if we prefer to use array methods like this.
+// // So basically we can now replace
+// // the traditional bracket notation
+// // with the more modern looking At Method,
+// // if we prefer to use array methods like this.
 
-// Now, maybe this doesn't look all too useful.
-// So, what's the big deal here?
-// Well, actually there is one particularity of the At Method,
-// which makes it quite useful to use
-// instead of the brackets notation.
+// // Now, maybe this doesn't look all too useful.
+// // So, what's the big deal here?
+// // Well, actually there is one particularity of the At Method,
+// // which makes it quite useful to use
+// // instead of the brackets notation.
 
-// getting the last array element - traditional
-console.log(arr[arr.length - 1]);
-console.log(arr.slice(-1)[0]);
+// // getting the last array element - traditional
+// console.log(arr[arr.length - 1]);
+// console.log(arr.slice(-1)[0]);
 
-//new method
-console.log(arr.at(-1));
+// //new method
+// console.log(arr.at(-1));
 
-// Now the only question is,
-// should you use this new At Method
-// or should you keep using the bracket notation?
-// Well, as always, it depends.
+// // Now the only question is,
+// // should you use this new At Method
+// // or should you keep using the bracket notation?
+// // Well, as always, it depends.
 
-// So, if you want to get to the last element of an array,
-// or basically start counting from the end of an array,
-// then you should probably start using the At Method.
+// // So, if you want to get to the last element of an array,
+// // or basically start counting from the end of an array,
+// // then you should probably start using the At Method.
 
-// Also, if you want to do something called "method chaining",
-// which we will talk about later in this section,
-// then the At Method is also perfect for that.
-// So basically combining multiple methods
-// all at the same time.
-// And then, it's quite helpful to use
-// the At Method instead of the brackets notation.
+// // Also, if you want to do something called "method chaining",
+// // which we will talk about later in this section,
+// // then the At Method is also perfect for that.
+// // So basically combining multiple methods
+// // all at the same time.
+// // And then, it's quite helpful to use
+// // the At Method instead of the brackets notation.
 
-// Now, on the other hand,
-// if you just want to quickly get a value from an array,
-// so just like the first element,
-// then of course you can keep using the brackets notation.
-// And personally, I also do that all the time.
-// So basically if all you want to do is something like this,
-// then you can simply keep using the square brackets.
-// Okay.
+// // Now, on the other hand,
+// // if you just want to quickly get a value from an array,
+// // so just like the first element,
+// // then of course you can keep using the brackets notation.
+// // And personally, I also do that all the time.
+// // So basically if all you want to do is something like this,
+// // then you can simply keep using the square brackets.
+// // Okay.
 
-// Oh, and by the way,
-// I actually also wanted to let you know that the At Method
-// also works on strings.
-console.log('elmar'.at(0));
-console.log('elmar'.at(-1));
+// // Oh, and by the way,
+// // I actually also wanted to let you know that the At Method
+// // also works on strings.
+// console.log('elmar'.at(0));
+// console.log('elmar'.at(-1));
+
+////////////////////////////////////////////////////////////
+// Looping Arrays: forEach
+////////////////////////////////////////////////////////////
+
+// In this lecture we will loop over an array
+// using the forEach method.
+// Now we had already learned
+// how to loop over an array using the for of loop,
+// but the forEach method is really fundamentally different.
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// So these positive values here are basically deposits
+// and the negative values are withdrawals.
+
+for (const movement of movements) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdraw ${Math.abs(movement)}`);
+  }
+}
+
+// but now let's finally learn how to use the forEach method
+// to achieve the exact same thing
+// but in my opinion in an easier way.
+// So to loop over the movements array
+// we use forEach,
+// and that's with a capital E, don't forget that.
+// And then the forEach method
+// actually requires a callback function here.
+// So forEach is technically a higher order function
+// as we learned in the last section,
+// which requires a callback function
+// in order to tell it what to do.
+
+// So it's the forEach method here
+// that will call this callback function.
+// We are not calling it ourselves as always.
+// And that's of course important to keep in mind once again,
+// But when exactly will forEach actually
+// call this callback function.
+// Well what the forEach method does is to loop over the array,
+// and in each iteration it will execute
+// this callback function here.
+// Also as the forEach method calls this callback function
+// in each iteration it will pass in the current element
+// of the array as an argument,
+
+// and we can specify that here
+// and let's call that again movement.
+// So again, each time this callback here is called,
+// so in each iteration,
+// it will receive the current element of the array
+// as an argument.
+
+console.log('------FOREACH-------');
+movements.forEach(function (movement) {
+  if (movement > 0) {
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdraw ${Math.abs(movement)}`);
+  }
+});
+
+// 0: function(200)
+// 1: function(450)
+// 2: function(400)
+// ...
+
+// So basically this is exactly the concept that I explained
+// In the last section
+// when I said that we use a callback function
+// to tell another higher order function
+// exactly what it should do,
+// and so in this case we tell forEach
+// that in each iteration
+// it should log one of these two strings here to the console
+// So we give the forEach method instructions
+// by giving it a callback function
+// which contains these instructions, alright.
+// And I really know and understand
+// that this is quite a hard concept to wrap your head around.
+// But if you just continue using this from now on
+// then eventually it will start to make sense, believe me.
+
+// Well I think that we can both agree
+// that it is the forEach method, right.
+// And maybe you don't agree with that
+// and of course that's okay,
+// as I keep mentioning
+// it's always good to develop your own style of programming.
+
+// So entries is in fact just another array method
+// and it returns an array of arrays,
+// remember, which in the first position
+// contains the current index
+// and then the value itself.
+// And so this is how we access
+// the counter variable in the for of loop.
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdraw ${Math.abs(movement)}`);
+  }
+}
+
+// And here, fortunately, it's a lot easier
+// to get access to the current index.
+// So to understand how it works we need to remember once more
+// that it is the forEach method
+// who calls this callback function in each iteration.
+// And as it calls this function
+// it also passes in the current element of the array,
+// but actually that's not all it passes in
+
+// in fact forEach passes in the current element,
+// the index and the entire array that we are looping.
+// And so therefore we can specify them here
+// in our parameter list.
+// So let's say index and array,
+
+// now of course we can just use one, like we have been doing,
+// or we can just use two,
+// or we can use all three together.
+// And as always the names here do not matter at all,
+// but what does matter is the order.
+// So the first parameter always needs to be
+// the current element,
+// the second parameter always the current index
+// and the third one always the entire array
+// that we are looping over.
+// Because that's the order in which the arguments,
+// so the actual values, are passed into our callback function.
+
+// And in fact in the real world we actually use
+// shorter names.
+console.log('------FOREACH with index-------');
+movements.forEach(function (mov, i, arr) {
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdraw ${Math.abs(mov)}`);
+  }
+});
+
+// Now when should you use forEach
+// and when should you use the for of loop.
+
+// Well one fundamental difference
+// between the two of them is that you cannot break out
+// of a forEach loop.
+// So the continue and break statements
+// do not work in a forEach loop at all.
+// So instead, forEach will always loop over the entire array
+// and there is nothing that you can do about it.
+
+// So if you really need to break out of a loop
+// then you have to keep using the for of loop,
+
+// but other than that
+// it really comes down to your personal preference.
+// Just like so many other things in JavaScript.
+// So every programming language always has
+// many different ways or different tools
+// to achieve the same thing.
+// And specially as more things
+// keep getting added to the language
+// there will always be more options to achieve the same result
+
+// All right, and with this we wrap up this lecture.
+// SO in my opinion this is a really brilliant
+// and powerful mechanism,
+// but I know that it's also rather complex
+// to wrap your head around this, isn't it?
+// And it actually took quite some time for me
+// to fully understand this myself, back in the day.
+// So please don't become frustrated with this,
+// it will all become obvious with the practice.
+// So just keep using this and then you will be fine.
+// Once you do understand exactly how this works
+// so specially this mechanism of the callback
+// and of the passing arguments into this callback here
+// so once you understand this fundamental mechanism
+// then working with all other array methods
+// in this section will become really easy.
+// Because most of them follow the exact same principle
+// of the callback function that we just explored here.
+// So please review this lecture carefully, and yeah.
+// If you really understand
+// the role of the callback function here
