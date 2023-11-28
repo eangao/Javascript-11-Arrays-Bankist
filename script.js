@@ -929,3 +929,64 @@ console.log(accounts);
 ///////////////////////////////////////////////////////////
 // Computing Usernames
 ///////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+// The filter Method
+////////////////////////////////////////////////////////////////
+// Now let's learn about the Filter Method.
+// Which, as we learned before is used to filter for elements
+// that satisfy a certain condition.
+// And how do we specify such a condition?
+// Well, you guessed it, we use a callback function again.
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// And just like the other callback functions like in the Map,
+// and for each, this one also gets access
+// to the current array element as well as the index
+// and the entire array.
+
+const deposits = movements.filter(function (mov, i, arr) {
+  return mov > 0;
+});
+
+console.log(movements);
+console.log(deposits);
+
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+console.log(depositsFor);
+
+// And so let's take a look now.
+// And, as expected we get the same result.
+// And so you could again ask, what is the big difference here?
+// Like, what's the big deal
+// and why not just use the four loop for everything.
+
+// And the reason for that is again the push that exists
+// in JavaScript for using more functional code, like this.
+// But there's also a more practical implication here.
+// And that's because we can actually chain
+// all of these methods together.
+
+// So, basically use them all one after another
+// to build a big final result.
+// So, a bit similar in fact to what we did here
+// in our application, right here.
+// But here we mixed string methods with array methods,
+// but later on we will do, like big chains,
+// only with array methods
+// and that would be completely impossible using the four loop.
+
+// So, that's another big advantage of using the methods
+// instead of the regular four loop.
+
+// Now, anyway I have just another small challenge
+// for you here which is to create an array of the withdrawals.
+// So, withdrawals like this.
+// So I want you to create this array without looking
+// at the code we already wrote.
+// And so the withdrawals should only include
+// the negative numbers too.
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
