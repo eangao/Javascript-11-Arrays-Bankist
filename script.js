@@ -1000,141 +1000,203 @@ console.log(accounts);
 /////////////////////////////////////////////////////////////////
 // The reduce Method
 /////////////////////////////////////////////////////////////////
-// In this video, we're gonna talk about
-// the third data transformations method,
-// which is the reduce method.
-// And as you will remember,
-// we use the reduce method to essentially boil down
-// all the elements in an array to one single value.
-// And we talked about the example of
-// adding up all the numbers in one array, right?
+// // In this video, we're gonna talk about
+// // the third data transformations method,
+// // which is the reduce method.
+// // And as you will remember,
+// // we use the reduce method to essentially boil down
+// // all the elements in an array to one single value.
+// // And we talked about the example of
+// // adding up all the numbers in one array, right?
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-console.log(movements);
+// console.log(movements);
 
-// Okay. So the reduce function also gets a callback function,
-// but this one is a little bit different from the other ones,
+// // Okay. So the reduce function also gets a callback function,
+// // but this one is a little bit different from the other ones,
 
-// like the one in map or for each.
-// So in these other callbacks,
-// the first parameter is always
-// the current element of the array.
-// Let's call it current.
-// The second one is the current index
-// and the third one is the entire array.
+// // like the one in map or for each.
+// // So in these other callbacks,
+// // the first parameter is always
+// // the current element of the array.
+// // Let's call it current.
+// // The second one is the current index
+// // and the third one is the entire array.
 
-// But here in the callback function of the reduce method,
-// the first parameter is actually
-// something called the accumulator.
-// So let's call it acc like this
-// as an abbreviation of accumulator.
-// And this accumulator is essentially like a snowball
-// that keeps accumulating the value
-// that we ultimately want to return.
+// // But here in the callback function of the reduce method,
+// // the first parameter is actually
+// // something called the accumulator.
+// // So let's call it acc like this
+// // as an abbreviation of accumulator.
+// // And this accumulator is essentially like a snowball
+// // that keeps accumulating the value
+// // that we ultimately want to return.
 
-// So in the case of adding all the elements
-// or all the numbers of an array together,
-// that will be the sum.
+// // So in the case of adding all the elements
+// // or all the numbers of an array together,
+// // that will be the sum.
 
-//accumulator -> snowball
-const balance = movements.reduce(function (acc, cur, i, arr) {
-  //   So as always, this callback function here
-  // will be called in each iteration
-  // of a looping over the array.
-  // So reduce also loops over the array
-  // and calls this callback in each iteration,
-  // but now what will we actually do
-  // in each of these iterations?
-  // Well, since the accumulator is the value
-  // that we will keep adding to what we're gonna do here
-  // is to add the current value to the accumulator.
-  // So the accumulator plus the current value. Okay.
+// //accumulator -> snowball
+// const balance = movements.reduce(function (acc, cur, i, arr) {
+//   //   So as always, this callback function here
+//   // will be called in each iteration
+//   // of a looping over the array.
+//   // So reduce also loops over the array
+//   // and calls this callback in each iteration,
+//   // but now what will we actually do
+//   // in each of these iterations?
+//   // Well, since the accumulator is the value
+//   // that we will keep adding to what we're gonna do here
+//   // is to add the current value to the accumulator.
+//   // So the accumulator plus the current value. Okay.
 
-  //   Finally, we also need to return this value here
-  // from the callback.
-  //   And so this is how the new accumulator
-  // can then be used in the next iteration of the loop.
-  // So basically in each loop iteration,
-  // we return the updated accumulator
-  // so the current one, plus the new current value.
-  // And so like this, we can then keep adding to it
-  // in the next iteration.
+//   //   Finally, we also need to return this value here
+//   // from the callback.
+//   //   And so this is how the new accumulator
+//   // can then be used in the next iteration of the loop.
+//   // So basically in each loop iteration,
+//   // we return the updated accumulator
+//   // so the current one, plus the new current value.
+//   // And so like this, we can then keep adding to it
+//   // in the next iteration.
 
-  console.log(`Iteration ${i}: ${acc}`);
-  console.log(cur);
-  return acc + cur;
-}, 0); //second parameter,
+//   console.log(`Iteration ${i}: ${acc}`);
+//   console.log(cur);
+//   return acc + cur;
+// }, 0); //second parameter,
 
-// but the reduce method actually has a another,
-// so a second parameter,
-// and that is the initial value of the accumulator.
-// So the value that we specify here,
-// which in this case is gonna be zero is the initial value
-// of the accumulator in the first loop iteration.
-// And so in this example, we want to start counting
-// or we want to start adding at zero.
+// // but the reduce method actually has a another,
+// // so a second parameter,
+// // and that is the initial value of the accumulator.
+// // So the value that we specify here,
+// // which in this case is gonna be zero is the initial value
+// // of the accumulator in the first loop iteration.
+// // And so in this example, we want to start counting
+// // or we want to start adding at zero.
 
-console.log(balance);
+// console.log(balance);
 
-let sum = 0;
-for (const mov of movements) sum += mov;
-console.log(sum);
+// let sum = 0;
+// for (const mov of movements) sum += mov;
+// console.log(sum);
 
-// but now we get indeed the same result.
-// And so here you can see this common pattern
-// that we always need an external variable
-// whenever we want to use a for loop.
-// And that's fine if you only need one loop,
-// but it starts to become really cumbersome
-// and unpractical when we use many loops
-// for doing many operations.
-// So these methods that we've been studying,
-// they completely avoid this extra variable
-// and they simply return the variable
-// or the value actually right away.
+// // but now we get indeed the same result.
+// // And so here you can see this common pattern
+// // that we always need an external variable
+// // whenever we want to use a for loop.
+// // And that's fine if you only need one loop,
+// // but it starts to become really cumbersome
+// // and unpractical when we use many loops
+// // for doing many operations.
+// // So these methods that we've been studying,
+// // they completely avoid this extra variable
+// // and they simply return the variable
+// // or the value actually right away.
 
-const balance2 = movements.reduce((acc, curr) => acc + curr, 0);
-console.log(balance2);
+// const balance2 = movements.reduce((acc, curr) => acc + curr, 0);
+// console.log(balance2);
 
-// Maximum value
+// // Maximum value
 
-// So this time, what I want to do is to get the maximum value
-// of the movements array here.
-// Okay, so in this case,
-// the result we're looking for is this 3,000.
-// Okay. And so for that, we can also use reduce,
-// because remember reduce is for boiling down the array
-// into just one single value,
-// but that value can be whatever we want.
+// // So this time, what I want to do is to get the maximum value
+// // of the movements array here.
+// // Okay, so in this case,
+// // the result we're looking for is this 3,000.
+// // Okay. And so for that, we can also use reduce,
+// // because remember reduce is for boiling down the array
+// // into just one single value,
+// // but that value can be whatever we want.
 
-// So it doesn't have to be a sum.
-// It could be a multiplication
-// or even something completely different,
-// like a string or an object,
-// but here we will keep working with numbers,
-// but this time we want the maximum number.
+// // So it doesn't have to be a sum.
+// // It could be a multiplication
+// // or even something completely different,
+// // like a string or an object,
+// // but here we will keep working with numbers,
+// // but this time we want the maximum number.
 
-const max = movements.reduce((acc, mov) => {
-  if (acc > mov) return acc;
-  else return mov; // And so now we return to movement as the new accumulator in the next iteration.
-}, movements[0]); // always just go with the first value of the array.
+// const max = movements.reduce((acc, mov) => {
+//   if (acc > mov) return acc;
+//   else return mov; // And so now we return to movement as the new accumulator in the next iteration.
+// }, movements[0]); // always just go with the first value of the array.
 
-// Now we could have used zero here,
-// but that would not be correct
-// because imagine that the first value
-// would be like a negative,
-// then this might not work as expected.
-// Maybe it might work with the maximum,
-// but not with a minimum, for example.
-// So don't just put zero here
-// when you're trying to find a maximum or a minimum value,
-// always just go with the first value of the array.
+// // Now we could have used zero here,
+// // but that would not be correct
+// // because imagine that the first value
+// // would be like a negative,
+// // then this might not work as expected.
+// // Maybe it might work with the maximum,
+// // but not with a minimum, for example.
+// // So don't just put zero here
+// // when you're trying to find a maximum or a minimum value,
+// // always just go with the first value of the array.
 
-console.log(max);
+// console.log(max);
 
-const max2 = movements.reduce(
-  (acc, mov) => (acc > mov ? acc : mov),
-  movements[0]
-);
-console.log('max2', max2);
+// const max2 = movements.reduce(
+//   (acc, mov) => (acc > mov ? acc : mov),
+//   movements[0]
+// );
+// console.log('max2', max2);
+
+///////////////////////////////////////////////////////////////
+// Coding Challenge #2
+///////////////////////////////////////////////////////////////
+
+// Let's go back to Julia and Kate's study about dogs. This time, they want to convert
+// dog ages to human ages and calculate the average age of the dogs in their study.
+
+// Your tasks:
+
+// Create a function 'calcAverageHumanAge', which accepts an arrays of dog's
+// ages ('ages'), and does the following things in order:
+
+// 1. Calculate the dog age in human years using the following formula: if the dog is
+// <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old,
+// humanAge = 16 + dogAge * 4
+
+// 2. Exclude all dogs that are less than 18 human years old (which is the same as
+// keeping dogs that are at least 18 years old)
+
+// 3. Calculate the average human age of all adult dogs (you should already know
+// from other challenges how we calculate averages �)
+
+// 4. Run the function for both test datasets
+
+// Test data:
+
+// § Data 1: [5, 2, 4, 1, 15, 8, 3]
+// § Data 2: [16, 6, 10, 5, 6, 1, 4]
+
+// GOOD LUCK �
+
+const calcAverageHumanAge = function (ages) {
+  console.log(ages);
+  // 1
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  console.log(humanAges);
+
+  // 2
+  const addults = humanAges.filter(age => age >= 18);
+  console.log(addults);
+
+  //3
+  // const average = addults.reduce((acc, curr) => acc + curr, 0) / addults.length;
+
+  //   Now, I just wanted to let that we could have done
+  // this average calculation here in a different way.
+  // So in a bit more complex way.
+
+  //2 3 ->  (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
+  const average = addults.reduce(
+    (acc, age, i, arr) => acc + age / arr.length,
+    0
+  );
+
+  return average;
+};
+
+const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+console.log(avg1);
+console.log(avg2);
