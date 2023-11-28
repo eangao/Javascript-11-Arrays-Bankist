@@ -69,6 +69,53 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// And so it's a good practice to pass the data
+// into a function
+// instead of, for example, having this function work
+// with a global variable.
+// That would work as well
+// but it's a lot better to pass that data directly
+// into the function.
+const displayMovements = function (movements) {
+  // Now in our HTML here
+  // is a little bit similar to text content.
+  // So remember that now the difference
+  // is that text content simply returns the text itself
+  // while HTML returns everything, including the HTML.
+  // So all the HTML tags will be included.
+  containerMovements.innerHTML = '';
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+      <div class="movements__row">
+          <div class="movements__type 
+          movements__type--${type}">${i + 1} ${type}</div>          
+          <div class="movements__value">${mov}</div>
+      </div>
+    `;
+
+    //docs insertAdjacentHTML
+    //https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+
+    // We're only inserting new HTML here
+    // inside of the containerMovements
+    // but we are not overriding anything.
+    // And so actually that has to be the first thing that we do.
+    // So the first thing is to essentially
+    // empty the entire container
+    // and only then we start adding new elements.
+    // So that's something common to do
+    // and it is also not difficult at all.
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+displayMovements(account1.movements);
+
+// console.log(containerMovements.innerHTML);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -598,3 +645,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 //see video the instructions
 //see flowchat image attached
+
+///////////////////////////////////////////////////////
+// Creating DOM Elements
+///////////////////////////////////////////////////////
