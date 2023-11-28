@@ -120,8 +120,6 @@ displayMovements(account1.movements);
 /////////////////////////////////////////////////
 // LECTURES
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
 /////////////////////////////////////////////////
 // Simple Array Methods
 /////////////////////////////////////////////////
@@ -746,3 +744,133 @@ displayMovements(account1.movements);
 // and reduce.
 
 // SEE PDF LECTURE
+
+///////////////////////////////////////////////////////////
+// The map Method
+///////////////////////////////////////////////////////////
+
+// And as we just learned, the map method
+// is yet another way that we can use to loop over a race.
+// But unlike for each, the map method will give us
+// a brand new array
+// and this new array will contain in each position
+// the results of applying a callback function
+// to the original array elements.
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const eurToUsd = 1.1;
+
+// So we already know that the map method will return
+// a brand new array.
+// modern way
+const movementsUSD = movements.map(function (mov) {
+  return mov * eurToUsd;
+  // return 23;
+});
+console.log(movements);
+console.log(movementsUSD);
+
+// Great, and of course you can also see
+// that the original movements array
+// was not mutated at all right?
+// And so indeed the map method really only returns
+// in new array with the new elements.
+// And this really is the fundamentals
+// of how the map method works.
+// So we can use this
+// and we will use it in all kinds of different situations.
+
+const movementsUSDFor = [];
+for (const mov of movements) {
+  movementsUSDFor.push(mov * eurToUsd);
+}
+console.log(movementsUSDFor);
+
+//using arrow function
+
+// However many people don't like the way that this looks.
+// So they argued that this lacks the function
+// and the return keyword which they say
+// it leads to bad readability.
+// And that it makes this whole thing
+// more difficult to understand.
+// And while I can see that, that might be true.
+// I actually do prefer the fact how much smaller
+// and cleaner this code is.
+// So in my opinion if you understand well enough
+// how the arrow function actually works
+// then you will become familiar with this pretty quickly.
+// And so then there is no problem in writing code like this.
+// Okay, the main thing that you need to keep in mind
+// is that here we are actually returning this value.
+// So you need to remember
+// that this is like writing return here.
+
+const movementsUSDArrow = movements.map(mov => mov * eurToUsd);
+console.log(movementsUSDArrow);
+
+// And so if you understand that, then you're good to go.
+// So I will actually use arrow functions in this situations
+// in the rest of the course, because I believe
+// that they are perfect for these small callback functions.
+// In my opinion they were really developed
+
+// But as always, if you do prefer the irregular
+// function syntax then please feel 100% free
+// to keep using them instead.
+
+// So just like to for each method,
+// the math method also has access
+// to the exact same three parameters.
+// So besides the current array element
+// which is this one here, we also get access
+// to the current index as well as the whole array.
+
+const movementsDescription = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+      mov
+    )}`
+);
+
+console.log(movementsDescription);
+
+// So one more time, all we do here is to pass
+// this callback function into the map method, rigt?
+// But we do not call this function by ourselves.
+// It is the map method who we'll call this function
+// for each of the array elements in the movement array.
+// Okay, now each time that the map method calls or callback
+// it will simply pass in the current array element as well
+// as the current index and the whole array.
+
+// And off these three, here we are only using the first two,
+// just the current element and the current index, all right?
+// And with this, I hope that by now
+// it is really crystal clear how this all works.
+
+// Now you could say, that what we did here
+// with this map method is essentially the same
+// as what we did with the, for each method.
+// But in fact, there is a big, big difference
+// between these two approaches.
+// So before we printed each line individually
+// to the console, as we were looping over the array.
+
+// So in each of the iterations, we performed some action
+// that was then visible in the console
+// and we can call this a side effect.
+// So the, for each method creates side effects.
+// But now here with this map method,
+// all we did was to return each
+// of the strings from the callback.
+// And so basically they got added into a new array.
+// And then finally we logged that entire array
+// to the console and not the elements one by one.
+// And so here in this map method
+// we did not create a side effect in each of the iteration.
+// All we did was to build a brand new array
+// and this idea of side effects will become important again,
+// as we talk more about functional programming.
+// Great, and this is how the map method works,
