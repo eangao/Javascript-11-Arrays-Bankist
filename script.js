@@ -115,6 +115,12 @@ const displayMovements = function (movements) {
 displayMovements(account1.movements);
 // console.log(containerMovements.innerHTML);
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements);
+
 const createUsernames = function (accs) {
   //   And in this case, the side effects are gonna be
   // to change, so to mutate the original accounts array.
@@ -933,60 +939,202 @@ console.log(accounts);
 ////////////////////////////////////////////////////////////////
 // The filter Method
 ////////////////////////////////////////////////////////////////
-// Now let's learn about the Filter Method.
-// Which, as we learned before is used to filter for elements
-// that satisfy a certain condition.
-// And how do we specify such a condition?
-// Well, you guessed it, we use a callback function again.
+// // Now let's learn about the Filter Method.
+// // Which, as we learned before is used to filter for elements
+// // that satisfy a certain condition.
+// // And how do we specify such a condition?
+// // Well, you guessed it, we use a callback function again.
+
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// // And just like the other callback functions like in the Map,
+// // and for each, this one also gets access
+// // to the current array element as well as the index
+// // and the entire array.
+
+// const deposits = movements.filter(function (mov, i, arr) {
+//   return mov > 0;
+// });
+
+// console.log(movements);
+// console.log(deposits);
+
+// const depositsFor = [];
+// for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+// console.log(depositsFor);
+
+// // And so let's take a look now.
+// // And, as expected we get the same result.
+// // And so you could again ask, what is the big difference here?
+// // Like, what's the big deal
+// // and why not just use the four loop for everything.
+
+// // And the reason for that is again the push that exists
+// // in JavaScript for using more functional code, like this.
+// // But there's also a more practical implication here.
+// // And that's because we can actually chain
+// // all of these methods together.
+
+// // So, basically use them all one after another
+// // to build a big final result.
+// // So, a bit similar in fact to what we did here
+// // in our application, right here.
+// // But here we mixed string methods with array methods,
+// // but later on we will do, like big chains,
+// // only with array methods
+// // and that would be completely impossible using the four loop.
+
+// // So, that's another big advantage of using the methods
+// // instead of the regular four loop.
+
+// // Now, anyway I have just another small challenge
+// // for you here which is to create an array of the withdrawals.
+// // So, withdrawals like this.
+// // So I want you to create this array without looking
+// // at the code we already wrote.
+// // And so the withdrawals should only include
+// // the negative numbers too.
+// const withdrawals = movements.filter(mov => mov < 0);
+// console.log(withdrawals);
+
+/////////////////////////////////////////////////////////////////
+// The reduce Method
+/////////////////////////////////////////////////////////////////
+// In this video, we're gonna talk about
+// the third data transformations method,
+// which is the reduce method.
+// And as you will remember,
+// we use the reduce method to essentially boil down
+// all the elements in an array to one single value.
+// And we talked about the example of
+// adding up all the numbers in one array, right?
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// And just like the other callback functions like in the Map,
-// and for each, this one also gets access
-// to the current array element as well as the index
-// and the entire array.
-
-const deposits = movements.filter(function (mov, i, arr) {
-  return mov > 0;
-});
-
 console.log(movements);
-console.log(deposits);
 
-const depositsFor = [];
-for (const mov of movements) if (mov > 0) depositsFor.push(mov);
-console.log(depositsFor);
+// Okay. So the reduce function also gets a callback function,
+// but this one is a little bit different from the other ones,
 
-// And so let's take a look now.
-// And, as expected we get the same result.
-// And so you could again ask, what is the big difference here?
-// Like, what's the big deal
-// and why not just use the four loop for everything.
+// like the one in map or for each.
+// So in these other callbacks,
+// the first parameter is always
+// the current element of the array.
+// Let's call it current.
+// The second one is the current index
+// and the third one is the entire array.
 
-// And the reason for that is again the push that exists
-// in JavaScript for using more functional code, like this.
-// But there's also a more practical implication here.
-// And that's because we can actually chain
-// all of these methods together.
+// But here in the callback function of the reduce method,
+// the first parameter is actually
+// something called the accumulator.
+// So let's call it acc like this
+// as an abbreviation of accumulator.
+// And this accumulator is essentially like a snowball
+// that keeps accumulating the value
+// that we ultimately want to return.
 
-// So, basically use them all one after another
-// to build a big final result.
-// So, a bit similar in fact to what we did here
-// in our application, right here.
-// But here we mixed string methods with array methods,
-// but later on we will do, like big chains,
-// only with array methods
-// and that would be completely impossible using the four loop.
+// So in the case of adding all the elements
+// or all the numbers of an array together,
+// that will be the sum.
 
-// So, that's another big advantage of using the methods
-// instead of the regular four loop.
+//accumulator -> snowball
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  //   So as always, this callback function here
+  // will be called in each iteration
+  // of a looping over the array.
+  // So reduce also loops over the array
+  // and calls this callback in each iteration,
+  // but now what will we actually do
+  // in each of these iterations?
+  // Well, since the accumulator is the value
+  // that we will keep adding to what we're gonna do here
+  // is to add the current value to the accumulator.
+  // So the accumulator plus the current value. Okay.
 
-// Now, anyway I have just another small challenge
-// for you here which is to create an array of the withdrawals.
-// So, withdrawals like this.
-// So I want you to create this array without looking
-// at the code we already wrote.
-// And so the withdrawals should only include
-// the negative numbers too.
-const withdrawals = movements.filter(mov => mov < 0);
-console.log(withdrawals);
+  //   Finally, we also need to return this value here
+  // from the callback.
+  //   And so this is how the new accumulator
+  // can then be used in the next iteration of the loop.
+  // So basically in each loop iteration,
+  // we return the updated accumulator
+  // so the current one, plus the new current value.
+  // And so like this, we can then keep adding to it
+  // in the next iteration.
+
+  console.log(`Iteration ${i}: ${acc}`);
+  console.log(cur);
+  return acc + cur;
+}, 0); //second parameter,
+
+// but the reduce method actually has a another,
+// so a second parameter,
+// and that is the initial value of the accumulator.
+// So the value that we specify here,
+// which in this case is gonna be zero is the initial value
+// of the accumulator in the first loop iteration.
+// And so in this example, we want to start counting
+// or we want to start adding at zero.
+
+console.log(balance);
+
+let sum = 0;
+for (const mov of movements) sum += mov;
+console.log(sum);
+
+// but now we get indeed the same result.
+// And so here you can see this common pattern
+// that we always need an external variable
+// whenever we want to use a for loop.
+// And that's fine if you only need one loop,
+// but it starts to become really cumbersome
+// and unpractical when we use many loops
+// for doing many operations.
+// So these methods that we've been studying,
+// they completely avoid this extra variable
+// and they simply return the variable
+// or the value actually right away.
+
+const balance2 = movements.reduce((acc, curr) => acc + curr, 0);
+console.log(balance2);
+
+// Maximum value
+
+// So this time, what I want to do is to get the maximum value
+// of the movements array here.
+// Okay, so in this case,
+// the result we're looking for is this 3,000.
+// Okay. And so for that, we can also use reduce,
+// because remember reduce is for boiling down the array
+// into just one single value,
+// but that value can be whatever we want.
+
+// So it doesn't have to be a sum.
+// It could be a multiplication
+// or even something completely different,
+// like a string or an object,
+// but here we will keep working with numbers,
+// but this time we want the maximum number.
+
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov; // And so now we return to movement as the new accumulator in the next iteration.
+}, movements[0]); // always just go with the first value of the array.
+
+// Now we could have used zero here,
+// but that would not be correct
+// because imagine that the first value
+// would be like a negative,
+// then this might not work as expected.
+// Maybe it might work with the maximum,
+// but not with a minimum, for example.
+// So don't just put zero here
+// when you're trying to find a maximum or a minimum value,
+// always just go with the first value of the array.
+
+console.log(max);
+
+const max2 = movements.reduce(
+  (acc, mov) => (acc > mov ? acc : mov),
+  movements[0]
+);
+console.log('max2', max2);
