@@ -256,6 +256,8 @@ btnLogin.addEventListener('click', function (e) {
     // Okay, but in this case, it's really just one style.
     // So it's not a big work to just do it like this.
     // So let's test this one out for now.
+
+    //hide UI
     containerApp.style.opacity = 100;
 
     // Clear input fields
@@ -302,6 +304,45 @@ btnTransfer.addEventListener('click', function (e) {
     //Update UI
     updateUI(currentAccount);
   }
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // console.log('Delete');
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+
+    console.log(index);
+    // Now, the big difference here is that with indexOf,
+    // we can only search for a value that is in the array.
+    // So, if the array contains the 23, then it's true,
+    // and if not, then it's false.
+    // But on the other hand, with findIndex,
+    // we can create a complex condition like this one,
+    // and of course, it doesn't have to be
+    // the equality operator here.
+    // It can be anything that returns true or false,
+    // .indexOf(23)
+
+    //Delete account
+    accounts.splice(index, 1);
+
+    //Hide UI
+    containerApp.style.opacity = 0;
+  }
+
+  // Clear input fields
+
+  // And we can do it like this,
+  // login pin also set it to equal,
+  // because the assignment operator works from right to left.
+  inputCloseUsername.value = inputClosePin.value = '';
 });
 
 /////////////////////////////////////////////////
@@ -1555,3 +1596,26 @@ btnTransfer.addEventListener('click', function (e) {
 ///////////////////////////////////////////////////////////
 // Implementing Login
 ///////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+// The findIndex Method
+////////////////////////////////////////////////////////////
+
+// And the the findIndex method works
+// almost the same way as find.
+// But as the name says, findIndex returns the index
+// of the found element and not the element itself.
+
+// both the find and findIndex methods
+// get access to also the current index,
+// and the current entire array.
+// So as always, besides the current element,
+// these other two values are also available.
+// But in practice, I never found these useful.
+
+// And second, the both the find and findIndex methods
+// were added to JavaScript in ES6.
+// And so they will not work in like super old browsers.
+// But don't worry, there is going to be a lecture
+// a little bit later on how to support
+// all of these old browsers.
