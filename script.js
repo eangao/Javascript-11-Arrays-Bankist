@@ -112,31 +112,27 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
-// console.log(containerMovements.innerHTML);
-
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance}€`;
 };
-calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
-  const income = movements
+const calcDisplaySummary = function (account) {
+  const income = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumIn.textContent = `${income}€`;
 
-  const out = movements
+  const out = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumOut.textContent = `${Math.abs(out)}€`;
 
-  const interest = movements
+  const interest = account.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
 
     // Great, but now let's say that the bank
     // introduces a new rule.
@@ -144,14 +140,13 @@ const calcDisplaySummary = function (movements) {
     // if that interest is at least one Euro
     // or whatever other currency.
     .filter((interest, i, arr) => {
-      console.log(arr);
+      // console.log(arr);
       return interest >= 1;
     })
     .reduce((acc, interest) => acc + interest, 0);
 
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(account1.movements);
 
 // const labelBalance = document.querySelector('.balance__value');
 // const labelSumIn = document.querySelector('.summary__value--in');
@@ -188,7 +183,7 @@ createUsernames(accounts);
 // all we want to do is to modify the object,
 // so the elements that already exist in the accounts array.
 
-console.log(accounts);
+// console.log(accounts);
 
 // So in this lecture, it was very important to understand
 // the use case for the map method here, which was perfect,
@@ -209,6 +204,71 @@ console.log(accounts);
 // based on the account owner,
 // plus all of these transformations
 // that we had already done before.
+
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  // And so in HTML, the default behavior,
+  // when we click the Submit button, is for the page to reload.
+  // So we need to stop that from happening.
+  // And for that, we need to actually give this function
+  // here, the event parameter, and let's just call it event.
+  // And you already know how this callback function gets access
+  // to this event object, remember?
+
+  //prevent form from submitting
+  e.preventDefault();
+
+  // console.log('LOGIN');
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  //   about something called optional chaining, remember?
+  // So we can do this, and then this pin property
+  // will only be read in case that the current account
+  // here actually exists, remember that?
+  // And so, this is a lot easier and a lot more elegant.
+  // currentAccount && currentAccount.pin  === optional chaining - currentAccount?.pin
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // console.log('LOGIN');
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+
+    // Now remember how I said in another project,
+    // that it's also good to use classes for this?
+    // Okay, but in this case, it's really just one style.
+    // So it's not a big work to just do it like this.
+    // So let's test this one out for now.
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+
+    // And we can do it like this,
+    // login pin also set it to equal,
+    // because the assignment operator works from right to left.
+    inputLoginUsername.value = inputLoginPin.value = '';
+
+    // We can use this blur function or method.
+    // So just call blur, and so that will make
+    // it so that this field loses its focus.
+    inputLoginPin.blur();
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -1389,71 +1449,75 @@ console.log(accounts);
 // The find Method
 ///////////////////////////////////////////////////////////////
 
-// After the very important map, filter
-// and reduce methods,
-// we still have some more methods to learn
-// which are also super important and used all the time.
-// So in this lecture,
-// we're gonna talk about the Find method.
+// // After the very important map, filter
+// // and reduce methods,
+// // we still have some more methods to learn
+// // which are also super important and used all the time.
+// // So in this lecture,
+// // we're gonna talk about the Find method.
 
-// we can use the Find method to retrieve one element
-// of an array based on a condition.
+// // we can use the Find method to retrieve one element
+// // of an array based on a condition.
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// and so find and just like the other methods
-// that we've been talking about,
-// the Find method also accepts a condition.
-// And just like the other array methods we've been talking
-// about the find method also accepts a callback function
-// which will then be called as the method loops
-// over the array, all right?
+// // and so find and just like the other methods
+// // that we've been talking about,
+// // the Find method also accepts a condition.
+// // And just like the other array methods we've been talking
+// // about the find method also accepts a callback function
+// // which will then be called as the method loops
+// // over the array, all right?
 
-// So Find is basically just another method
-// that loops over the array
-// but then it does something different.
-// And in this case
-// what the Find method does is
-// to retrieve an element of the array.
-// So as always the current element of the iteration
+// // So Find is basically just another method
+// // that loops over the array
+// // but then it does something different.
+// // And in this case
+// // what the Find method does is
+// // to retrieve an element of the array.
+// // So as always the current element of the iteration
 
-const firstWithdrawal = movements.find(mov => mov < 0);
+// const firstWithdrawal = movements.find(mov => mov < 0);
 
-// So you see that just like the Filter method,
-// the Find method also needs a callback function
-// that returns a Boolean.
+// // So you see that just like the Filter method,
+// // the Find method also needs a callback function
+// // that returns a Boolean.
 
-// So the result of this is of course,
-// is either true or false.
+// // So the result of this is of course,
+// // is either true or false.
 
-// Now, unlike the Filter method,
-// the Find method will actually not return a new array
-// but it will only return the first element
-// in the array that satisfies this condition.
-// So basically in other words,
-// the first element in the array for which
-// this operation here becomes true.
+// // Now, unlike the Filter method,
+// // the Find method will actually not return a new array
+// // but it will only return the first element
+// // in the array that satisfies this condition.
+// // So basically in other words,
+// // the first element in the array for which
+// // this operation here becomes true.
 
-console.log(movements);
-console.log(firstWithdrawal);
+// console.log(movements);
+// console.log(firstWithdrawal);
 
-// So as you see, the Find method is a bit similar
-// to the Filter method,
+// // So as you see, the Find method is a bit similar
+// // to the Filter method,
 
-// but there are two fundamental differences.
+// // but there are two fundamental differences.
 
-// First Filter returns all the elements
-// that match the condition
+// // First Filter returns all the elements
+// // that match the condition
 
-// while the Find method
-// only returns the first one and second
-// and even more important,
-// a new array
+// // while the Find method
+// // only returns the first one and second
+// // and even more important,
+// // a new array
 
-// while Find only returns the element itself
-// and not an array,
+// // while Find only returns the element itself
+// // and not an array,
 
-console.log(accounts);
+// console.log(accounts);
 
-const account = accounts.find(acc => acc.owner === 'Jessica Davis');
-console.log(account);
+// const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+// console.log(account);
+
+///////////////////////////////////////////////////////////
+// Implementing Login
+///////////////////////////////////////////////////////////
