@@ -306,6 +306,41 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+// And the some method will become helpful
+// for this loan feature
+// because our bank has a rule,
+// which says that it only grants a loan
+// if there at least one deposit
+// with at least 10% of the requested loan amount.
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  // And so whenever we see or hear the word any,
+  // we can already know that it's probably a good use case
+  // for the some method.
+
+  //   and so yeah, if at least one of the elements
+  // in the movements array has this condition,
+  // so it's true, so basically it's greater than 10%
+  // of the requested amount,
+  // then all of this here will become true.
+  // And so the some method is perfect
+  // to be used in a condition like this.
+  // So when we need to test for something,
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -1619,3 +1654,101 @@ btnClose.addEventListener('click', function (e) {
 // But don't worry, there is going to be a lecture
 // a little bit later on how to support
 // all of these old browsers.
+
+////////////////////////////////////////////////////////
+// some and every
+////////////////////////////////////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log(movements);
+
+//EQUALITY
+
+// So basically includes here returns true
+// if any value in the array is exactly equal to -130, right?
+// And so again, this is essentially testing for equality
+console.log(movements.includes(-130));
+
+// but what if we wanted to test for a condition instead?
+// And so that's where this some method comes into play.
+
+//SOME: CONDITION
+console.log(movements.some(mov => mov === -130));
+
+// So let's say that we would like to know
+// if there has been any deposits on this account.
+// So in other words, we want to know
+// if there is any positive movement in this array.
+// So any number above zero.
+
+// And so if there is any value
+// for which this condition is true,
+// then the some method will return true.
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+
+//EVERY
+
+// So again, the every method is pretty similar
+// to the some method
+// but as you might guess, the difference between them
+// is that every only returns true
+// if all of the elements in the array satisfy the condition
+// that we pass in.
+// So in other words, if every element passes the test
+// in our callback function,
+// only then the every method returns true
+// and that's why the method is called every
+// in the first place.
+
+//EVERY
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// And now to finish, there is now more cool thing
+// that I want to show you.
+// So up until this point,
+// we have always written the callback function directly
+// as an argument into our array methods, right?
+// However, we could also write this function separately
+// and then pass the function as a callback.
+
+//SEPERATE CALLBACK
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+
+// So let's say
+// separate callback
+// and so we could do this.
+// So let's call deposit to this function.
+// All right?
+
+// And so this function here is exactly the same as these ones
+// but as I just said,
+// there is no reason for them to being directly written here
+// in all of these array methods.
+
+// We could simply write them like this
+// and then all we would have to do
+// is to call movements.some, for example,
+// and then deposits or deposit.
+// And now we could reuse the same function
+// for all kinds of different methods
+// that require callbacks with a true/false condition.
+// So that could be every or filter as well.
+// Okay?
+
+// And so here is the result of these three operations
+// and so here we get the expected results.
+// And all by reusing the same function.
+// Then if we wanted to change the function,
+// all we would have to do is to change it here in one place
+// and then all the results
+// would become different according to that.
+
+// So in practice, that's something that we do sometimes
+// because this is, of course, better for the DRY principle.
+// So don't repeat yourself.
+// That's always important and it is important here as well.
