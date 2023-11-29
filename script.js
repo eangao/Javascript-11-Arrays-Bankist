@@ -1348,39 +1348,112 @@ console.log(accounts);
 /////////////////////////////////////////////////////////////////
 // Coding Challenge #3
 /////////////////////////////////////////////////////////////////
-// Rewrite the 'calcAverageHumanAge' function from Challenge #2,
-//  but this time as an arrow function, and using chaining!
+// // Rewrite the 'calcAverageHumanAge' function from Challenge #2,
+// //  but this time as an arrow function, and using chaining!
 
-// Test data:
+// // Test data:
 
-// § Data 1: [5, 2, 4, 1, 15, 8, 3]
-// § Data 2: [16, 6, 10, 5, 6, 1, 4]
+// // § Data 1: [5, 2, 4, 1, 15, 8, 3]
+// // § Data 2: [16, 6, 10, 5, 6, 1, 4]
 
-// GOOD LUCK �
+// // GOOD LUCK �
 
-// from Challenge #2
-const calcAverageHumanAge = function (ages) {
-  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+// // from Challenge #2
+// const calcAverageHumanAge = function (ages) {
+//   const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
 
-  const addults = humanAges.filter(age => age >= 18);
+//   const addults = humanAges.filter(age => age >= 18);
 
-  const average = addults.reduce(
-    (acc, age, i, arr) => acc + age / arr.length,
-    0
-  );
+//   const average = addults.reduce(
+//     (acc, age, i, arr) => acc + age / arr.length,
+//     0
+//   );
 
-  return average;
-};
+//   return average;
+// };
 
-// Coding Challenge #3 solution
-const calcAverageHumanAge2 = ages =>
-  ages
-    .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
-    .filter(age => age >= 18)
-    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+// // Coding Challenge #3 solution
+// const calcAverageHumanAge2 = ages =>
+//   ages
+//     .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+//     .filter(age => age >= 18)
+//     .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
 
-const avg1 = calcAverageHumanAge2([5, 2, 4, 1, 15, 8, 3]);
-const avg2 = calcAverageHumanAge2([16, 6, 10, 5, 6, 1, 4]);
+// const avg1 = calcAverageHumanAge2([5, 2, 4, 1, 15, 8, 3]);
+// const avg2 = calcAverageHumanAge2([16, 6, 10, 5, 6, 1, 4]);
 
-console.log(avg1);
-console.log(avg2);
+// console.log(avg1);
+// console.log(avg2);
+
+///////////////////////////////////////////////////////////////
+// The find Method
+///////////////////////////////////////////////////////////////
+
+// After the very important map, filter
+// and reduce methods,
+// we still have some more methods to learn
+// which are also super important and used all the time.
+// So in this lecture,
+// we're gonna talk about the Find method.
+
+// we can use the Find method to retrieve one element
+// of an array based on a condition.
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// and so find and just like the other methods
+// that we've been talking about,
+// the Find method also accepts a condition.
+// And just like the other array methods we've been talking
+// about the find method also accepts a callback function
+// which will then be called as the method loops
+// over the array, all right?
+
+// So Find is basically just another method
+// that loops over the array
+// but then it does something different.
+// And in this case
+// what the Find method does is
+// to retrieve an element of the array.
+// So as always the current element of the iteration
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+
+// So you see that just like the Filter method,
+// the Find method also needs a callback function
+// that returns a Boolean.
+
+// So the result of this is of course,
+// is either true or false.
+
+// Now, unlike the Filter method,
+// the Find method will actually not return a new array
+// but it will only return the first element
+// in the array that satisfies this condition.
+// So basically in other words,
+// the first element in the array for which
+// this operation here becomes true.
+
+console.log(movements);
+console.log(firstWithdrawal);
+
+// So as you see, the Find method is a bit similar
+// to the Filter method,
+
+// but there are two fundamental differences.
+
+// First Filter returns all the elements
+// that match the condition
+
+// while the Find method
+// only returns the first one and second
+// and even more important,
+// a new array
+
+// while Find only returns the element itself
+// and not an array,
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
