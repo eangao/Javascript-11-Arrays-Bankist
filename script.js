@@ -1658,97 +1658,213 @@ btnClose.addEventListener('click', function (e) {
 ////////////////////////////////////////////////////////
 // some and every
 ////////////////////////////////////////////////////////
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-console.log(movements);
+// console.log(movements);
 
-//EQUALITY
+// //EQUALITY
 
-// So basically includes here returns true
-// if any value in the array is exactly equal to -130, right?
-// And so again, this is essentially testing for equality
-console.log(movements.includes(-130));
+// // So basically includes here returns true
+// // if any value in the array is exactly equal to -130, right?
+// // And so again, this is essentially testing for equality
+// console.log(movements.includes(-130));
 
-// but what if we wanted to test for a condition instead?
-// And so that's where this some method comes into play.
+// // but what if we wanted to test for a condition instead?
+// // And so that's where this some method comes into play.
 
-//SOME: CONDITION
-console.log(movements.some(mov => mov === -130));
+// //SOME: CONDITION
+// console.log(movements.some(mov => mov === -130));
 
-// So let's say that we would like to know
-// if there has been any deposits on this account.
-// So in other words, we want to know
-// if there is any positive movement in this array.
-// So any number above zero.
+// // So let's say that we would like to know
+// // if there has been any deposits on this account.
+// // So in other words, we want to know
+// // if there is any positive movement in this array.
+// // So any number above zero.
 
-// And so if there is any value
-// for which this condition is true,
-// then the some method will return true.
-const anyDeposits = movements.some(mov => mov > 0);
-console.log(anyDeposits);
+// // And so if there is any value
+// // for which this condition is true,
+// // then the some method will return true.
+// const anyDeposits = movements.some(mov => mov > 0);
+// console.log(anyDeposits);
 
-//EVERY
+// //EVERY
 
-// So again, the every method is pretty similar
-// to the some method
-// but as you might guess, the difference between them
-// is that every only returns true
-// if all of the elements in the array satisfy the condition
-// that we pass in.
-// So in other words, if every element passes the test
-// in our callback function,
-// only then the every method returns true
-// and that's why the method is called every
-// in the first place.
+// // So again, the every method is pretty similar
+// // to the some method
+// // but as you might guess, the difference between them
+// // is that every only returns true
+// // if all of the elements in the array satisfy the condition
+// // that we pass in.
+// // So in other words, if every element passes the test
+// // in our callback function,
+// // only then the every method returns true
+// // and that's why the method is called every
+// // in the first place.
 
-//EVERY
-console.log(movements.every(mov => mov > 0));
-console.log(account4.movements.every(mov => mov > 0));
+// //EVERY
+// console.log(movements.every(mov => mov > 0));
+// console.log(account4.movements.every(mov => mov > 0));
 
-// And now to finish, there is now more cool thing
-// that I want to show you.
-// So up until this point,
-// we have always written the callback function directly
-// as an argument into our array methods, right?
-// However, we could also write this function separately
-// and then pass the function as a callback.
+// // And now to finish, there is now more cool thing
+// // that I want to show you.
+// // So up until this point,
+// // we have always written the callback function directly
+// // as an argument into our array methods, right?
+// // However, we could also write this function separately
+// // and then pass the function as a callback.
 
-//SEPERATE CALLBACK
-const deposit = mov => mov > 0;
-console.log(movements.some(deposit));
-console.log(movements.every(deposit));
-console.log(movements.filter(deposit));
+// //SEPERATE CALLBACK
+// const deposit = mov => mov > 0;
+// console.log(movements.some(deposit));
+// console.log(movements.every(deposit));
+// console.log(movements.filter(deposit));
 
-// So let's say
-// separate callback
-// and so we could do this.
-// So let's call deposit to this function.
-// All right?
+// // So let's say
+// // separate callback
+// // and so we could do this.
+// // So let's call deposit to this function.
+// // All right?
 
-// And so this function here is exactly the same as these ones
-// but as I just said,
-// there is no reason for them to being directly written here
-// in all of these array methods.
+// // And so this function here is exactly the same as these ones
+// // but as I just said,
+// // there is no reason for them to being directly written here
+// // in all of these array methods.
 
-// We could simply write them like this
-// and then all we would have to do
-// is to call movements.some, for example,
-// and then deposits or deposit.
-// And now we could reuse the same function
-// for all kinds of different methods
-// that require callbacks with a true/false condition.
-// So that could be every or filter as well.
-// Okay?
+// // We could simply write them like this
+// // and then all we would have to do
+// // is to call movements.some, for example,
+// // and then deposits or deposit.
+// // And now we could reuse the same function
+// // for all kinds of different methods
+// // that require callbacks with a true/false condition.
+// // So that could be every or filter as well.
+// // Okay?
 
-// And so here is the result of these three operations
-// and so here we get the expected results.
-// And all by reusing the same function.
-// Then if we wanted to change the function,
-// all we would have to do is to change it here in one place
-// and then all the results
-// would become different according to that.
+// // And so here is the result of these three operations
+// // and so here we get the expected results.
+// // And all by reusing the same function.
+// // Then if we wanted to change the function,
+// // all we would have to do is to change it here in one place
+// // and then all the results
+// // would become different according to that.
 
-// So in practice, that's something that we do sometimes
-// because this is, of course, better for the DRY principle.
-// So don't repeat yourself.
-// That's always important and it is important here as well.
+// // So in practice, that's something that we do sometimes
+// // because this is, of course, better for the DRY principle.
+// // So don't repeat yourself.
+// // That's always important and it is important here as well.
+
+/////////////////////////////////////////////////////////////////
+// flat and flatMap
+/////////////////////////////////////////////////////////////////
+
+// The next two array methods
+// that we're gonna learn,
+// are the flat and flat map methods.
+// And thankfully, these are very easy to understand.
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+
+// flat and also flat map
+// were introduced in ES2019.
+// So they are pretty recent,
+
+// So no callback function, adjust like this,
+// and we get indeed,
+// or full array from one to eight.
+// So (indistinct) removed the nested arrays
+// and flattened the array,
+// which is why the method is called flat.
+console.log(arr.flat());
+
+// which still contains the two inner arrays. All right.
+// So this means that the flat method,
+// only goes one level deep,
+// when flattening the array.
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat());
+
+// So we can fortunately fix that,
+// by using the depth argument.
+// So right now, basically flat,
+// is running with the,
+// one here as the depth.
+// And so if we run it with one,
+// which is the default,
+// then we get this,
+
+// but we can go two levels deep.
+// And so now we get the same result as before.
+// And that's because it now goes,
+// even into the second level of nesting
+// and also takes the element out of depth array. All right.
+// So that's how flat works,
+// but this example is not really that useful.
+console.log(arrDeep.flat(2));
+
+//FLAT
+
+// And so let's go back
+// to the bank accounts.
+// So let's say that the bank itself,
+// wants to calculate the overall balance
+// of all the movements
+// of all the accounts.
+// So how would we go about solving this problem?
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+// And of course we can make this here,
+// a lot more beautiful.
+// So instead of doing all of this separately,
+// as you already know,
+// we can use chaining.
+const overallBalance2 = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(overallBalance2);
+
+// Now it turns out that, using a map first
+// and then flattening the result,
+// and it's a pretty common operation.
+
+// FLAT MAP
+
+// And so to solve this,
+// there is another method
+// that was also introduced
+// at the same time, which is flat map.
+
+// And so flat map essentially combines,
+// a map and a flat method,
+// into just one method,
+// which is better for performance.
+
+const overallBalance3 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance3);
+
+// Now just notice that, flat map here,
+// only goes one level deep
+// and we cannot change it.
+// So if you do need to go deeper than just one level,
+// you still need to use the flat method.
+
+// So anyway, keep these two in mind.
+// Whenever you find yourself in a situation
+// where you have nested the race
+// and need to work with them.
+
+// And believe me,
+// that happens more often than you think,
+// and I believe that,
+// even in the course of this course,
+// there is gonna be another situation.
