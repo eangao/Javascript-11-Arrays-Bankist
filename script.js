@@ -1901,151 +1901,397 @@ btnSort.addEventListener('click', function (e) {
 // Sorting Arrays
 //////////////////////////////////////////////////////////////////
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// And so in this lecture, let's talk about sorting arrays.
-// Now, sorting is a much-discussed topic in computer science
-// and there are countless algorithms and methods
-// of sorting values
-// and we might actually talk about this a little bit later
-// in the course.
-// For now though,
-// we're simple gonna use JavaScript's built-in sort method.
+// // And so in this lecture, let's talk about sorting arrays.
+// // Now, sorting is a much-discussed topic in computer science
+// // and there are countless algorithms and methods
+// // of sorting values
+// // and we might actually talk about this a little bit later
+// // in the course.
+// // For now though,
+// // we're simple gonna use JavaScript's built-in sort method.
 
-// STRINGS
-const owners = ['Jonas', 'Zach', 'Adam', 'Matha'];
-console.log(owners.sort());
+// // STRINGS
+// const owners = ['Jonas', 'Zach', 'Adam', 'Matha'];
+// console.log(owners.sort());
 
-// And so indeed, we now get our array here nicely sorted.
-// So alphabetically from A to Z.
-// So this works indeed just as expected, right?
-// Now, this actually mutates the original array.
-console.log(owners);
+// // And so indeed, we now get our array here nicely sorted.
+// // So alphabetically from A to Z.
+// // So this works indeed just as expected, right?
+// // Now, this actually mutates the original array.
+// console.log(owners);
 
-// And so we have to be very careful with this method.
+// // And so we have to be very careful with this method.
 
-// Numbers
-console.log(movements);
-console.log(movements.sort());
+// // Numbers
+// console.log(movements);
+// console.log(movements.sort());
 
-// this time, the result
-// is not really what we are expecting, right?
-// These numbers are not at all ordered in any way, are they?
-// And the reason for this
-// is that the sort method
-// does the sorting based on strings, all right?
+// // this time, the result
+// // is not really what we are expecting, right?
+// // These numbers are not at all ordered in any way, are they?
+// // And the reason for this
+// // is that the sort method
+// // does the sorting based on strings, all right?
 
-// So that might sound weird
-// but that is just how it works by default.
+// // So that might sound weird
+// // but that is just how it works by default.
 
-// So basically, what it does
-// is to convert everything to strings
-// and then it does the sorting itself.
-// And if we look at the result as if they were strings,
+// // So basically, what it does
+// // is to convert everything to strings
+// // and then it does the sorting itself.
+// // And if we look at the result as if they were strings,
 
-// So again, if they were strings,
-// then this result would make sense.
+// // So again, if they were strings,
+// // then this result would make sense.
 
-// But they are not strings
-// and so we have to fix this
-// and in fact, we can fix this
-// by passing in a compare callback function
-// into the sort method.
+// // But they are not strings
+// // and so we have to fix this
+// // and in fact, we can fix this
+// // by passing in a compare callback function
+// // into the sort method.
 
-// Ascending
-movements.sort((a, b) => {
-  //  return < 0 , A, B -> (Keep order)
-  //  return > 0 , B, A -> (switch order)
-  if (a > b) return 1;
-  if (a < b) return -1;
+// // Ascending
+// movements.sort((a, b) => {
+//   //  return < 0 , A, B -> (Keep order)
+//   //  return > 0 , B, A -> (switch order)
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
+// // and so let's write movements.sort
+// // and we need to give it a callback function,
+// // and this callback function is called with two arguments
+// // and let's simply call them a and b.
+// // Okay?
+
+// // And these two parameters here
+// // are essentially the current value and the next value
+// // if we imagine the sort method looping over the array.
+// // However, in order to understand
+// // how the compare function works,
+// // so how this callback function here works
+// // and how we have to write it,
+// // let's just think of a and b
+// // as simply being two consecutive numbers in the array.
+// // And it doesn't matter which ones.
+// // So let's simply take these two.
+// // So 450 and 400.
+
+// // Now, in our callback function here,
+// // if we return less than zero,
+// // then the value a will be sorted before value b.
+// // And the opposite, if we return a positive value,
+// // then a will be put before b
+// // in the sorted output array,
+
+// // So if a is greater than b,
+// // return, and let's say one.
+// // And the number here doesn't really matter
+// // as long as it's greater than zero.
+// // And else, or actually let's write it like this,
+// // so if b is greater than a,
+// // then return something negative.
+// // So just -1, okay?
+
+// console.log(movements);
+
+// // descending order
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
+
+// console.log(movements);
+
+// // Now, if we are working with numbers,
+// // then we can actually simplify this a lot
+// // by simply using some simple math.
+// // So let's take a look again here at our condition.
+// // So we already know that if a is greater than b,
+// // then a minus b would always be something positive, right?
+// // And the same here with a less than b.
+// // So if a is less than b,
+// // then we know that a minus b
+// // is always something negative
+// // and something negative is exactly what we want
+// // to return here, isn't it?
+
+// // Ascending
+// movements.sort((a, b) => a - b);
+// console.log(movements);
+
+// // So let's recap what we did here.
+// // So again, we already know that if a is greater than b,
+// // then this will be a positive number
+// // and so here we then return that positive number.
+// // It doesn't have to be exactly one.
+// // Just something greater than zero.
+
+// // Now, if it's the other way around,
+// // if a is less than b, then this operation
+// // will always be a negative number.
+// // And so therefore, then something negative
+// // is returned just as -1.
+// // But again, it can be any number.
+// // And by the way, if we return zero here,
+// // so in case these two values are the same,
+// // then their position simply remains unchanged.
+
+// // descending
+// movements.sort((a, b) => b - a);
+// console.log(movements);
+
+// // Now, if you have a mixed array,
+// // like with strings and numbers together,
+// // then this is not gonna work and I advise you
+// // to simply not to use the sort method
+// // in these cases anyway.
+// // And that's because there's not really a point
+// // in doing so.
+
+///////////////////////////////////////////////////////////
+// More Ways of Creating and Filling Arrays
+//////////////////////////////////////////////////////////////
+
+// he last thing that we're gonna learn in this section
+// is how to programmatically create and fill arrays.
+
+// So far we have always simply created arrays like this.
+// Right?
+// So basically writing them out by hand, literally.
+// So just like this,
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log([1, 2, 3, 4, 5, 6, 7]);
+
+// or maybe we might've done it also like this.
+// So using a new Array, a constructor,
+// and then passing in all the numbers here as arguments,
+// and then that also creates this array.
+// Now in this cases we basically already have all data.
+// So for example, one, two, three, four, all the way to seven.
+// So that's the data that we already have.
+// And so therefore we could then manually create these arrays.
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// However, we can actually also generate
+// arrays programmatically,
+// so without having to define all the items manually.
+// And there are many situations in which this is necessary
+// and there are also multiple ways of doing it.
+// And the easiest one is to again,
+// use the Array() constructor function.
+
+//Empty array + fill method
+const x = new Array(7);
+// instead it creates a new array with seven empty elements
+// in there and it simply contains nothing.
+// So this output is very weird indeed.
+// And the reason for that
+// is this weird behavior of this Array() function
+// which does it so that whenever we only pass in one argument,
+// then it creates a new empty argument with that length.
+// So if we don't know about this special particularity
+// of the Array() constructor function
+// then this can lead to weird errors.
+console.log(x);
+
+// Now also we cannot really use this X array for anything.
+// For example, we cannot call the map() method on it
+// to now fill it up.
+// For example, we might want to do this map().
+console.log(x.map(() => 5));
+
+// So this is not really useful except for one thing,
+// because there is one method that we can call
+// on this empty array and that is the fill() method.
+// So that's a new method that we haven't studied yet,
+// but it's very straight forward.
+// So let me show it to you.
+// So that's x.fill() and then all we need to do
+// is to pass in a value and it will then fill up
+// the entire array with this specific value.
+
+// And this does actually mutate the underlying array.
+// so we can just change it there
+
+// x.fill(1);
+console.log(x);
+
+// So besides this value that we want to fill the array with,
+// we can also specify where we want it to start to fill.
+x.fill(1, 3, 5); //fill array with 1 value in position 3 to 5
+console.log(x);
+
+arr.fill(23, 4, 6); //fill with 23 in position 4 and 6
+console.log(arr);
+
+// the array from our first example?
+// So what if he wanted to create this arr array
+// programmatically?
+// Well, for that, we could use the Array.from() function.
+// So that's Array.from(),
+
+// And indeed we get here the exact same result
+// that we had before.
+// But in my opinion,
+// this is a lot cleaner than using this a weird new array
+// behavior than and together with the fill() method.
+// So in my opinion, this is way nicer.
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+// So again, this callback function here
+// is exactly like the one in a map() method.
+// So you can simply imagine that you're using this
+// as a callback function in calling the map() method
+// on an empty array.
+// And so as always, we get access to the current element
+// and the index.
+// And so adding one to the index will then give us values
+// from one to seven.
+// So Z meant...
+
+// because we do not need this current value at all.
+// But we still of course have to define something
+// as the first parameter because the index that we need
+// is only the second parameter.
+// But to denote that we are not using this current element,
+// we simply write an underscore.
+// And then other programmers
+// will also understand this convention
+// and automatically know that we don't use this parameter.
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+// let's now move on and see a more real use case
+// of the Array.from() function.
+// Now, this Array.from() function
+// was initially introduced into JavaScript
+// in order to create arrays from array like structures.
+// So remember how I talked about so-called Iterables before,
+// so things like Strings, Maps or Sets,
+// they are all Iterables in JavaScript.
+// And so they can be converted to real arrays
+// using Array.from().
+// And that's the reason also for the name of the function,
+// because we can create arrays from other things.
+// All right.
+
+// Now, besides these obvious Iterables that I just mentioned,
+// like Maps or Sets another great example
+// of an array like structure
+// is the result of using querySelectorAll().
+// So maybe you remember that querySelectorAll() returns,
+// something called a NodeList,
+// which is something like an array,
+// which contains all the selected elements.
+// But it's not a real array,
+// and so it doesn't have methods like map(), for example.
+// But it's not a real array,
+// and so it doesn't have most of the array methods
+// like map() or reduce().
+
+// So if we actually wanted to use
+// a real array method like that on a NodeList,
+// we would first need to convert the NodeList to an array.
+// And for that Array.from() is perfect.
+// So let's do something here now.
+
+// And let's say that we do not have the movements
+// or for application here stored in an array.
+// So let me show that real quick.
+// So again, let's pretend that we only have these values,
+// so all of these movements only stored here
+// in the user interface,
+
+// but we do not have them somewhere in our code.
+// So we don't have an array containing these values.
+// But now let's say we want to calculate their sum.
+// And so therefore we need to somehow get them first
+// from the user interface and then do the calculation
+// based on that.
+const movementsUI = Array.from(document.querySelectorAll('.movements__value'));
+
+// So let's just start by checking it out, movementsUI,
+// but now we only get two elements here,
+// and so that's the one that by the time we load
+// this script here are already in the user interface.
+console.log(movementsUI);
+
+// So if we wanted to actually select exactly these elements,
+// we would have to do this code here on some event handler.
+// So let's do that, actually.
+// Let's simply perform this action
+// when we click somewhere here.
+// Let's say here on this BalanceLabel.
+// So it doesn't matter where we click,
+// So that is called the Label Balance.
+// So we can attach a EventListeners to every object.
+// It doesn't have to be a button.
+// So I think we never did this actually.
+// But let's see what happens now.
+labelBalance.addEventListener('click', function () {
+  //   And again, remember that we are doing this
+  // so that we can now read these seven movements
+  // from the user interface as we click here.
+  // And indeed now it worked.
+  // So now we get these eight movements here.
+  // and you see that indeed,
+  // it is these values that we see now on the screen.
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    //     And then as a second step,
+    // we even included a mapping function,
+    // which then forms that initial array
+    // to an array exactly as we want it.
+    // So basically converting the raw element to its text content
+    // and replacing the Euro sign with nothing.
+    el => Number(el.textContent.replace('€', ''))
+  );
+
+  console.log(movementsUI);
+
+  //   But now let me also show you that we cannot
+  // call the map() method on it
+  // because the map() method would be useful to now actually get
+  // to adjust the number,
+  // because you'll see that here we also have
+  // this C or sign and so we need to get rid of that.
+  // And so the map() method would be perfect for that.
+  // console.log(movementsUI.map(el => Number(el.textContent.replace('€', ''))));
+  // console.log(movementsUI.map());
+  console.log(movementsUI);
+
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+  //   And by the way, I'm not sure if I mentioned it earlier,
+  // but there is another way of converting
+  // this here to an array,
+  // so let me grab it here.
+
+  // So movementsUI2, and then we can actually
+  // spread the results of this querySelectorAll()
+  // into a new array as well.
+  // So this also creates the array,
+
+  // but then we would have to do the mapping separately.
+  // And so actually I prefer this.
+
+  //  const movementsUI;
+
+  // So to me, the Array.from() function was a great addition
+  // to JavaScript in ES6.
+  // And that's actually all I had to tell you
+  // here in this video.
+  // So that was the last couple of methods and functions
+
+  // that we learned about a arrays.
+  // And indeed, we learned a lot of methods in the section.
+  // Now, keeping all of them in your mind
+  // to solve different tasks is of course,
+  // a very hard thing to do.
+  // And so to make sense of all this mess,
+  // in the next video, I will help you decide which array method
+  // you should use in each situation
+  // to solve different problems.
 });
-// and so let's write movements.sort
-// and we need to give it a callback function,
-// and this callback function is called with two arguments
-// and let's simply call them a and b.
-// Okay?
-
-// And these two parameters here
-// are essentially the current value and the next value
-// if we imagine the sort method looping over the array.
-// However, in order to understand
-// how the compare function works,
-// so how this callback function here works
-// and how we have to write it,
-// let's just think of a and b
-// as simply being two consecutive numbers in the array.
-// And it doesn't matter which ones.
-// So let's simply take these two.
-// So 450 and 400.
-
-// Now, in our callback function here,
-// if we return less than zero,
-// then the value a will be sorted before value b.
-// And the opposite, if we return a positive value,
-// then a will be put before b
-// in the sorted output array,
-
-// So if a is greater than b,
-// return, and let's say one.
-// And the number here doesn't really matter
-// as long as it's greater than zero.
-// And else, or actually let's write it like this,
-// so if b is greater than a,
-// then return something negative.
-// So just -1, okay?
-
-console.log(movements);
-
-// descending order
-movements.sort((a, b) => {
-  if (a > b) return -1;
-  if (a < b) return 1;
-});
-
-console.log(movements);
-
-// Now, if we are working with numbers,
-// then we can actually simplify this a lot
-// by simply using some simple math.
-// So let's take a look again here at our condition.
-// So we already know that if a is greater than b,
-// then a minus b would always be something positive, right?
-// And the same here with a less than b.
-// So if a is less than b,
-// then we know that a minus b
-// is always something negative
-// and something negative is exactly what we want
-// to return here, isn't it?
-
-// Ascending
-movements.sort((a, b) => a - b);
-console.log(movements);
-
-// So let's recap what we did here.
-// So again, we already know that if a is greater than b,
-// then this will be a positive number
-// and so here we then return that positive number.
-// It doesn't have to be exactly one.
-// Just something greater than zero.
-
-// Now, if it's the other way around,
-// if a is less than b, then this operation
-// will always be a negative number.
-// And so therefore, then something negative
-// is returned just as -1.
-// But again, it can be any number.
-// And by the way, if we return zero here,
-// so in case these two values are the same,
-// then their position simply remains unchanged.
-
-// descending
-movements.sort((a, b) => b - a);
-console.log(movements);
-
-// Now, if you have a mixed array,
-// like with strings and numbers together,
-// then this is not gonna work and I advise you
-// to simply not to use the sort method
-// in these cases anyway.
-// And that's because there's not really a point
-// in doing so.
