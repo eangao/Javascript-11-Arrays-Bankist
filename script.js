@@ -76,7 +76,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // That would work as well
 // but it's a lot better to pass that data directly
 // into the function.
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   // Now in our HTML here
   // is a little bit similar to text content.
   // So remember that now the difference
@@ -85,7 +85,26 @@ const displayMovements = function (movements) {
   // So all the HTML tags will be included.
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  //   All we want is to display a sorted movements array
+  // but we do not want to sort the original underlying data.
+  // So what do we do here?
+
+  // Well, we simply take a copy of the movements array
+  // and sort that.
+  // And so that's what we use now slice for
+  // and this is one of these situations
+  // that I was telling you about earlier
+  // where we need to actually create a copy,
+  // using the slice method
+  // and not the spread operator
+  // because here we are in the middle of a chain.
+  // And so we want to keep going after this
+  // and so it's a lot better
+  // to simply use the method here
+  // so that we can then simply chain the sort method onto that.
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -378,6 +397,15 @@ btnClose.addEventListener('click', function (e) {
   // login pin also set it to equal,
   // because the assignment operator works from right to left.
   inputCloseUsername.value = inputClosePin.value = '';
+});
+
+let sorted = false;
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
@@ -1757,114 +1785,267 @@ btnClose.addEventListener('click', function (e) {
 // flat and flatMap
 /////////////////////////////////////////////////////////////////
 
-// The next two array methods
-// that we're gonna learn,
-// are the flat and flat map methods.
-// And thankfully, these are very easy to understand.
+// // The next two array methods
+// // that we're gonna learn,
+// // are the flat and flat map methods.
+// // And thankfully, these are very easy to understand.
 
-const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
 
-// flat and also flat map
-// were introduced in ES2019.
-// So they are pretty recent,
+// // flat and also flat map
+// // were introduced in ES2019.
+// // So they are pretty recent,
 
-// So no callback function, adjust like this,
-// and we get indeed,
-// or full array from one to eight.
-// So (indistinct) removed the nested arrays
-// and flattened the array,
-// which is why the method is called flat.
-console.log(arr.flat());
+// // So no callback function, adjust like this,
+// // and we get indeed,
+// // or full array from one to eight.
+// // So (indistinct) removed the nested arrays
+// // and flattened the array,
+// // which is why the method is called flat.
+// console.log(arr.flat());
 
-// which still contains the two inner arrays. All right.
-// So this means that the flat method,
-// only goes one level deep,
-// when flattening the array.
-const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
-console.log(arrDeep.flat());
+// // which still contains the two inner arrays. All right.
+// // So this means that the flat method,
+// // only goes one level deep,
+// // when flattening the array.
+// const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+// console.log(arrDeep.flat());
 
-// So we can fortunately fix that,
-// by using the depth argument.
-// So right now, basically flat,
-// is running with the,
-// one here as the depth.
-// And so if we run it with one,
-// which is the default,
-// then we get this,
+// // So we can fortunately fix that,
+// // by using the depth argument.
+// // So right now, basically flat,
+// // is running with the,
+// // one here as the depth.
+// // And so if we run it with one,
+// // which is the default,
+// // then we get this,
 
-// but we can go two levels deep.
-// And so now we get the same result as before.
-// And that's because it now goes,
-// even into the second level of nesting
-// and also takes the element out of depth array. All right.
-// So that's how flat works,
-// but this example is not really that useful.
-console.log(arrDeep.flat(2));
+// // but we can go two levels deep.
+// // And so now we get the same result as before.
+// // And that's because it now goes,
+// // even into the second level of nesting
+// // and also takes the element out of depth array. All right.
+// // So that's how flat works,
+// // but this example is not really that useful.
+// console.log(arrDeep.flat(2));
 
-//FLAT
+// //FLAT
 
-// And so let's go back
-// to the bank accounts.
-// So let's say that the bank itself,
-// wants to calculate the overall balance
-// of all the movements
-// of all the accounts.
-// So how would we go about solving this problem?
-const accountMovements = accounts.map(acc => acc.movements);
-console.log(accountMovements);
+// // And so let's go back
+// // to the bank accounts.
+// // So let's say that the bank itself,
+// // wants to calculate the overall balance
+// // of all the movements
+// // of all the accounts.
+// // So how would we go about solving this problem?
+// const accountMovements = accounts.map(acc => acc.movements);
+// console.log(accountMovements);
 
-const allMovements = accountMovements.flat();
-console.log(allMovements);
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
 
-const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
-console.log(overallBalance);
+// const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+// console.log(overallBalance);
 
-// And of course we can make this here,
-// a lot more beautiful.
-// So instead of doing all of this separately,
-// as you already know,
-// we can use chaining.
-const overallBalance2 = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .reduce((acc, mov) => acc + mov, 0);
+// // And of course we can make this here,
+// // a lot more beautiful.
+// // So instead of doing all of this separately,
+// // as you already know,
+// // we can use chaining.
+// const overallBalance2 = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc, mov) => acc + mov, 0);
 
-console.log(overallBalance2);
+// console.log(overallBalance2);
 
-// Now it turns out that, using a map first
-// and then flattening the result,
-// and it's a pretty common operation.
+// // Now it turns out that, using a map first
+// // and then flattening the result,
+// // and it's a pretty common operation.
 
-// FLAT MAP
+// // FLAT MAP
 
-// And so to solve this,
-// there is another method
-// that was also introduced
-// at the same time, which is flat map.
+// // And so to solve this,
+// // there is another method
+// // that was also introduced
+// // at the same time, which is flat map.
 
-// And so flat map essentially combines,
-// a map and a flat method,
-// into just one method,
-// which is better for performance.
+// // And so flat map essentially combines,
+// // a map and a flat method,
+// // into just one method,
+// // which is better for performance.
 
-const overallBalance3 = accounts
-  .flatMap(acc => acc.movements)
-  .reduce((acc, mov) => acc + mov, 0);
-console.log(overallBalance3);
+// const overallBalance3 = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((acc, mov) => acc + mov, 0);
+// console.log(overallBalance3);
 
-// Now just notice that, flat map here,
-// only goes one level deep
-// and we cannot change it.
-// So if you do need to go deeper than just one level,
-// you still need to use the flat method.
+// // Now just notice that, flat map here,
+// // only goes one level deep
+// // and we cannot change it.
+// // So if you do need to go deeper than just one level,
+// // you still need to use the flat method.
 
-// So anyway, keep these two in mind.
-// Whenever you find yourself in a situation
-// where you have nested the race
-// and need to work with them.
+// // So anyway, keep these two in mind.
+// // Whenever you find yourself in a situation
+// // where you have nested the race
+// // and need to work with them.
 
-// And believe me,
-// that happens more often than you think,
-// and I believe that,
-// even in the course of this course,
-// there is gonna be another situation.
+// // And believe me,
+// // that happens more often than you think,
+// // and I believe that,
+// // even in the course of this course,
+// // there is gonna be another situation.
+
+//////////////////////////////////////////////////////////////////
+// Sorting Arrays
+//////////////////////////////////////////////////////////////////
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// And so in this lecture, let's talk about sorting arrays.
+// Now, sorting is a much-discussed topic in computer science
+// and there are countless algorithms and methods
+// of sorting values
+// and we might actually talk about this a little bit later
+// in the course.
+// For now though,
+// we're simple gonna use JavaScript's built-in sort method.
+
+// STRINGS
+const owners = ['Jonas', 'Zach', 'Adam', 'Matha'];
+console.log(owners.sort());
+
+// And so indeed, we now get our array here nicely sorted.
+// So alphabetically from A to Z.
+// So this works indeed just as expected, right?
+// Now, this actually mutates the original array.
+console.log(owners);
+
+// And so we have to be very careful with this method.
+
+// Numbers
+console.log(movements);
+console.log(movements.sort());
+
+// this time, the result
+// is not really what we are expecting, right?
+// These numbers are not at all ordered in any way, are they?
+// And the reason for this
+// is that the sort method
+// does the sorting based on strings, all right?
+
+// So that might sound weird
+// but that is just how it works by default.
+
+// So basically, what it does
+// is to convert everything to strings
+// and then it does the sorting itself.
+// And if we look at the result as if they were strings,
+
+// So again, if they were strings,
+// then this result would make sense.
+
+// But they are not strings
+// and so we have to fix this
+// and in fact, we can fix this
+// by passing in a compare callback function
+// into the sort method.
+
+// Ascending
+movements.sort((a, b) => {
+  //  return < 0 , A, B -> (Keep order)
+  //  return > 0 , B, A -> (switch order)
+  if (a > b) return 1;
+  if (a < b) return -1;
+});
+// and so let's write movements.sort
+// and we need to give it a callback function,
+// and this callback function is called with two arguments
+// and let's simply call them a and b.
+// Okay?
+
+// And these two parameters here
+// are essentially the current value and the next value
+// if we imagine the sort method looping over the array.
+// However, in order to understand
+// how the compare function works,
+// so how this callback function here works
+// and how we have to write it,
+// let's just think of a and b
+// as simply being two consecutive numbers in the array.
+// And it doesn't matter which ones.
+// So let's simply take these two.
+// So 450 and 400.
+
+// Now, in our callback function here,
+// if we return less than zero,
+// then the value a will be sorted before value b.
+// And the opposite, if we return a positive value,
+// then a will be put before b
+// in the sorted output array,
+
+// So if a is greater than b,
+// return, and let's say one.
+// And the number here doesn't really matter
+// as long as it's greater than zero.
+// And else, or actually let's write it like this,
+// so if b is greater than a,
+// then return something negative.
+// So just -1, okay?
+
+console.log(movements);
+
+// descending order
+movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (a < b) return 1;
+});
+
+console.log(movements);
+
+// Now, if we are working with numbers,
+// then we can actually simplify this a lot
+// by simply using some simple math.
+// So let's take a look again here at our condition.
+// So we already know that if a is greater than b,
+// then a minus b would always be something positive, right?
+// And the same here with a less than b.
+// So if a is less than b,
+// then we know that a minus b
+// is always something negative
+// and something negative is exactly what we want
+// to return here, isn't it?
+
+// Ascending
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// So let's recap what we did here.
+// So again, we already know that if a is greater than b,
+// then this will be a positive number
+// and so here we then return that positive number.
+// It doesn't have to be exactly one.
+// Just something greater than zero.
+
+// Now, if it's the other way around,
+// if a is less than b, then this operation
+// will always be a negative number.
+// And so therefore, then something negative
+// is returned just as -1.
+// But again, it can be any number.
+// And by the way, if we return zero here,
+// so in case these two values are the same,
+// then their position simply remains unchanged.
+
+// descending
+movements.sort((a, b) => b - a);
+console.log(movements);
+
+// Now, if you have a mixed array,
+// like with strings and numbers together,
+// then this is not gonna work and I advise you
+// to simply not to use the sort method
+// in these cases anyway.
+// And that's because there's not really a point
+// in doing so.
