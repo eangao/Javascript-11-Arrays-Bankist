@@ -2339,3 +2339,274 @@ btnSort.addEventListener('click', function (e) {
 // or maybe I just want to get a new string,
 // to transform the array to a new value,
 // or simply to loop over the array?
+
+////////////////////////////////////////////////////////////////////
+// Array Methods Practice
+////////////////////////////////////////////////////////////////////
+
+// 1
+
+// And the first exercise I wanna do here
+// is actually a very simple one
+// in which all we want to do is to calculate
+// how much has been deposited in total in the bank.
+// So in all the accounts across the bank.
+
+const bankDepositSum2 = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .filter(mov => mov > 0)
+  .reduce((sum, cur) => sum + cur, 0);
+
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((sum, cur) => sum + cur, 0);
+
+console.log(bankDepositSum2);
+console.log(bankDepositSum);
+
+// 2
+
+// And now in exercise number two,
+// I want to count how many deposits there have been
+// in the bank with at least $1,000.
+
+//simple solution
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+console.log(numDeposits1000);
+
+//solution using reduce
+// because as I mentioned before,
+// I actually want to show you
+// how we could do the same thing using reduce.
+const numDeposits1000_2 = accounts
+  .flatMap(acc => acc.movements)
+  // .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+  // .reduce((count, cur) => (cur >= 1000 ? count++ : count), 0);
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+console.log(numDeposits1000_2);
+
+let a = 10;
+console.log(a++);
+console.log(a);
+
+// Or at least we think so, because now as I reload,
+// we are back to this being zero.
+
+// So why do you think that is?
+// Well, there is actually something that I didn't tell you
+// about the plus plus operator.
+// And so I thought that this was a good opportunity
+// to maybe clear that up.
+// And for that,
+
+// let's simply do a very simple example down here.
+// Let's say, let a equal 10,
+// then let's log to the console a plus plus.
+// And so again, you see that a is actually still 10
+// even though we used this plus plus here.
+// So why is that?
+// Well, the plus plus operator
+// does actually increment the value
+// but it still returns the previous value.
+
+// So if we now log the a again here, you will see that now
+// it is indeed 11.
+// So the plus plus operator did its job here.
+// But the thing is that when we use it like this,
+// it will still return the all to value, which here was 10.
+
+// And so the same thing happened here.
+// So we did count plus plus
+// which then increased the value from zero to one.
+// But the result of this expression here is still zero.
+// And so zero was returned here to the next iteration.
+// And therefore in the end we will always have zero.
+// So like this, it's impossible to increase the value
+// to one, two, three, four, five, and six.
+// So this is actually something really important to understand
+// about the plus plus operator
+// and which I didn't make really clear before.
+
+//============
+// Now fortunately for us, there is an easy solution
+// because we can simply use the so-called
+// prefixed plus plus operator.
+// So we can write it before the operand.
+// So plus plus a, and so now the result of this here
+// should already be 11.
+// So both of these should now be 11.
+// And indeed they are.
+
+//Prefixed ++ operator
+let b = 10;
+console.log(++b);
+console.log(b);
+
+// 3
+
+// And now let's go to exercise number three
+// which will be an even more advanced case
+// of the reduce method.
+// And in this one what we're gonna do
+// is to create a new object instead of just a number
+// or just a string,
+
+// because why not?
+// So we already know that reduce boils down a array
+// to just one value.
+// And so that value might very well be an object.
+// It could even be a new array as well.
+// And in fact, we could use reduce to replace many
+// of the other methods that we have.
+// So reduce really is like the Swiss knife of array methods.
+// We could use it for everything.
+
+// on this exercise of which the goal is to create an object
+// which contains the sum of the deposits
+// and of the withdrawals.
+// So basically we want to calculate these two sums
+// all at the same time, all in one go using the reduce method.
+
+// the goal of this exercise is to create an object.
+// And so our starting point then of course also needs
+// to be an object.
+// And this could be an empty object
+
+const sums = accounts
+  // const { deposits, withdrawals } = accounts // commented to preserve my notes
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+
+      //       Now, usually that happens implicitly like here
+      // but you already know that this here has an implicit return.
+      // But this is easy to forget in these cases.
+      // So that's why I'm emphasizing it here.
+      // So again, we always need to return in the end,
+      // the accumulator.
+
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+//   And this could be an empty object just like this
+// or we could of course also already start filling it.
+// So let's say that we want to start with deposits of zero
+// and withdrawals at zero as well.
+
+console.log(sums);
+
+// And let's actually distract this object immediately
+// so we can do this.
+// So we need to now use the exact same names as here.
+// So deposits and withdrawals.
+// And so here we can now log these two to the console.
+// And indeed, we now get these two values here.
+
+//with distraction
+const { deposits, withdrawals } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      //       but I don't really like this part here so much.
+      // So let me just show you another way in which we could do it.
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+
+      // And so we can actually do this.
+      // So here we can now conditionally say
+      // that we want to select either deposits
+      // or withdrawals based on this condition.
+
+      //       and yeah so we get the same result.
+      // But I think that this way here is just a little bit cleaner
+      // but in any way, what matters here is that we were able
+      // to create a brand new object based on the reduced methods.
+      // And this can be really helpful in many situations.
+      //       And so please take some time to review this exercise
+      // because this was really a great use case
+      // on how to use something other than a primitive value
+      // as the accumulator of the reduced method.
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(deposits, withdrawals);
+
+// And I would even challenge you to do this with arrays.
+// So as a challenge would challenge you to recreate
+// any of the examples that we did previously
+// in the section with map filter and reduce
+// to use only the reduce method.
+// And that is totally possible.
+// And so, yeah, you can try that out.
+// You don't have to, and I will certainly not do that now
+// but as an exercise and to get an even better understanding
+// of the reduced method, you could totally do that.
+
+//challenge - solve using reduce the first exercise
+
+// And the first exercise I wanna do here
+// is actually a very simple one
+// in which all we want to do is to calculate
+// how much has been deposited in total in the bank.
+// So in all the accounts across the bank.
+
+// original solution
+
+// const bankDepositSum = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 0)
+//   .reduce((sum, cur) => sum + cur, 0);
+// console.log(bankDepositSum);
+
+//challenge solution
+const bankDepositSum3 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((sum, cur) => {
+    cur > 0 ? (sum += cur) : sum;
+
+    return sum;
+  }, 0);
+
+console.log(bankDepositSum3);
+
+// 4
+
+// what I want to do now
+// is to create a simple function to convert any string
+// to a title case.
+// So title case basically means that all the words
+// in a sentence are capitalized except for some of them.
+// So there are some exceptions.
+// Let me try an example here.
+
+// this is a nice title -> This Is a Nice Title
+
+// nd so this is gonna be a nice exercise combining string
+// and array methods, all in one function.
+
+const convertTitleCase = function (title) {
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
